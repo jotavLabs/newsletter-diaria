@@ -1,13 +1,21 @@
 import os
+import re
 import json
 import random
 import smtplib
 import requests
 import feedparser
-from datetime import datetime
+from datetime import datetime, timedelta
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import anthropic
+
+from config import INTERESSES, EMAIL_DESTINO, EMAIL_REMETENTE
+
+MODEL           = "claude-sonnet-4-5"
+LOG             = "log.txt"
+MAX_CANDIDATES  = 30    # limite enviado ao Claude
+LOG_WINDOW_DAYS = 120   # dias de histórico passados ao Claude
 
 FRASES = [
     "A vida não examinada não vale a pena ser vivida. — Sócrates",
@@ -46,7 +54,7 @@ FRASES = [
     "Para cada minuto de raiva, você perde sessenta segundos de felicidade. — Emerson",
     "A maior riqueza é a pobreza de desejos. — Sêneca",
     "Não é pobre quem tem pouco, mas quem deseja muito. — Sêneca",
-    "Nenhum homem pode atravessar o mesmo rio duas vezes, pois não é o mesmo rio e ele não é o mesmo homem. — Heráclito",
+    "Nenhum homem pode atravessar o mesmo rio duas vezes. — Heráclito",
     "O caráter de um homem é o seu destino. — Heráclito",
     "A arte de viver é mais parecida com a arte de lutar do que com a de dançar. — Marco Aurélio",
     "Você tem poder sobre sua mente, não sobre eventos externos. — Marco Aurélio",
@@ -61,11 +69,6 @@ FRASES = [
     "O coração tem razões que a própria razão desconhece. — Pascal",
     "A curiosidade é a mãe de todas as ciências. — Leonardo da Vinci",
 ]
-
-from config import INTERESSES, EMAIL_DESTINO, EMAIL_REMETENTE
-
-MODEL   = "claude-sonnet-4-5"
-LOG     = "log.txt"
 
 
 # ── FETCH ──────────────────────────────────────────────────────────────────────
@@ -90,10 +93,20 @@ def fetch_hn():
 
 
 def fetch_arxiv():
+    # só busca arXiv se o usuário tiver interesse em áreas técnicas/científicas
+    tech_keywords = ["ia", "inteligência artificial", "machine learning", "ml",
+                     "ciência", "tecnologia", "programação", "dados", "física", "matemática"]
+    tem_interesse_tecnico = any(
+        any(kw in i.lower() for kw in tech_keywords)
+        for i in INTERESSES
+    )
+    if not tem_interesse_tecnico:
+        return []
+
     candidates = []
     try:
         url  = (
-            "http://export.arxiv.org/api/query"
+            "https://export.arxiv.org/api/query"
             "?search_query=cat:cs.AI+OR+cat:cs.LG+OR+cat:cs.CL"
             "&sortBy=submittedDate&sortOrder=descending&max_results=15"
         )
@@ -130,13 +143,14 @@ def fetch_google_news():
 
 
 def collect_candidates():
-    raw = fetch_hn() + fetch_arxiv() + fetch_google_news()
+    raw  = fetch_hn() + fetch_arxiv() + fetch_google_news()
     seen, unique = set(), []
     for c in raw:
         if c["url"] not in seen:
             seen.add(c["url"])
             unique.append(c)
-    return unique
+    # limita payload enviado ao Claude
+    return unique[:MAX_CANDIDATES]
 
 
 # ── LOG ────────────────────────────────────────────────────────────────────────
@@ -144,8 +158,14 @@ def collect_candidates():
 def load_log():
     if not os.path.exists(LOG):
         return ""
+    corte = (datetime.now() - timedelta(days=LOG_WINDOW_DAYS)).strftime("%Y-%m-%d")
+    linhas_recentes = []
     with open(LOG, "r", encoding="utf-8") as f:
-        return f.read()
+        for linha in f:
+            data = linha[:10]
+            if data >= corte:
+                linhas_recentes.append(linha.rstrip())
+    return "\n".join(linhas_recentes)
 
 
 def save_log(titulo):
@@ -155,21 +175,34 @@ def save_log(titulo):
 
 # ── CLAUDE ─────────────────────────────────────────────────────────────────────
 
+def parse_json_response(text):
+    text = text.strip()
+    if "```" in text:
+        match = re.search(r"```(?:json)?\s*([\s\S]*?)```", text)
+        if match:
+            text = match.group(1).strip()
+    start = text.find("{")
+    end   = text.rfind("}") + 1
+    if start == -1 or end == 0:
+        return {"status": "lista_vazia"}
+    return json.loads(text[start:end])
+
+
 def select_topic(candidates, historico, client):
-    interesses_str   = ", ".join(INTERESSES)
-    candidates_json  = json.dumps(candidates, ensure_ascii=False)
+    interesses_str  = ", ".join(INTERESSES)
+    candidates_json = json.dumps(candidates, ensure_ascii=False)
 
     prompt = f"""Você é um sistema de seleção de tópicos de estudo para newsletter diária.
 
 INTERESSES: {interesses_str}
 
-HISTÓRICO (evitar repetição semântica):
+HISTÓRICO — últimos {LOG_WINDOW_DAYS} dias (evitar repetição semântica):
 {historico or "Nenhum ainda."}
 
 CANDIDATOS:
 {candidates_json}
 
-Avalie cada candidato e selecione o melhor usando os critérios:
+Avalie cada candidato e selecione os melhores usando os critérios:
 - C1 Atualidade (0-3): 3=últimos 7 dias | 2=últimos 30 dias com discussão ativa | 1=sem data | 0=sem ancoragem
 - C2 Fit de interesse (0-3): 3=interesse exato | 2=subárea direta | 1=tangencia | 0=fora → descartar
 - C3 Valor educacional (0-2): 2=ensina conceito/método aplicável | 1=breaking news ou fontes escassas | 0=só informa evento
@@ -181,38 +214,16 @@ Desempate: C3 maior → C1 maior → C2 maior → mais fontes disponíveis.
 Retorne APENAS JSON válido, sem nenhum texto adicional:
 {{
   "status": "ok",
-  "top1": {{
-    "titulo": "título exato do candidato selecionado",
-    "url": "url do candidato",
-    "score": 0,
-    "links": ["url_apoio_1", "url_apoio_2"]
-  }},
-  "fallback": [
-    {{"url": "url_segundo_melhor"}},
-    {{"url": "url_terceiro_melhor"}}
-  ]
+  "top1": {{"titulo": "...", "url": "...", "score": 0, "links": ["url1", "url2"]}},
+  "top2": {{"titulo": "...", "url": "...", "links": ["url1"]}},
+  "top3": {{"titulo": "...", "url": "...", "links": ["url1"]}}
 }}
 
 Se nenhum candidato for válido: {{"status": "lista_vazia"}}"""
 
-    r    = client.messages.create(model=MODEL, max_tokens=800,
-                                  messages=[{"role": "user", "content": prompt}])
-    text = r.content[0].text.strip()
-
-    # remove bloco markdown se presente (```json ... ```)
-    if "```" in text:
-        import re
-        match = re.search(r"```(?:json)?\s*([\s\S]*?)```", text)
-        if match:
-            text = match.group(1).strip()
-
-    start = text.find("{")
-    end   = text.rfind("}") + 1
-
-    if start == -1 or end == 0:
-        return {"status": "lista_vazia"}
-
-    return json.loads(text[start:end])
+    r = client.messages.create(model=MODEL, max_tokens=800,
+                               messages=[{"role": "user", "content": prompt}])
+    return parse_json_response(r.content[0].text)
 
 
 def generate_email(topic, client):
@@ -250,13 +261,12 @@ Regras:
     return r.content[0].text.strip()
 
 
-# ── EMAIL ──────────────────────────────────────────────────────────────────────
-
-def send_email(content):
-    lines         = content.split("\n")
-    subject       = ""
-    body_lines    = []
-    reading_body  = False
+def validate_email_content(content):
+    """Retorna (subject, body) ou lança ValueError se o conteúdo for inválido."""
+    lines        = content.split("\n")
+    subject      = ""
+    body_lines   = []
+    reading_body = False
 
     for line in lines:
         if line.startswith("ASSUNTO:"):
@@ -265,17 +275,28 @@ def send_email(content):
         elif reading_body:
             body_lines.append(line)
 
+    body = "\n".join(body_lines).strip()
+
+    if not subject:
+        raise ValueError("Assunto ausente no conteúdo gerado.")
+    if len(body) < 100:
+        raise ValueError(f"Corpo do email muito curto ({len(body)} caracteres).")
+
+    return subject, body
+
+
+# ── EMAIL ──────────────────────────────────────────────────────────────────────
+
+def send_email(subject, body):
     msg = MIMEMultipart("alternative")
     msg["Subject"] = subject
     msg["From"]    = EMAIL_REMETENTE
     msg["To"]      = EMAIL_DESTINO
-    msg.attach(MIMEText("\n".join(body_lines).strip(), "plain", "utf-8"))
+    msg.attach(MIMEText(body, "plain", "utf-8"))
 
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as s:
         s.login(EMAIL_REMETENTE, os.environ["GMAIL_APP_PASSWORD"])
         s.sendmail(EMAIL_REMETENTE, EMAIL_DESTINO, msg.as_string())
-
-    return subject
 
 
 # ── MAIN ───────────────────────────────────────────────────────────────────────
@@ -284,32 +305,64 @@ def log(msg):
     print(f"[{datetime.now().strftime('%H:%M:%S')}] {msg}")
 
 
+def try_topic(topic, client):
+    """Tenta gerar e validar o email para um tópico. Retorna (subject, body) ou None."""
+    try:
+        content        = generate_email(topic, client)
+        subject, body  = validate_email_content(content)
+        return subject, body
+    except Exception as e:
+        log(f"Tópico '{topic['titulo']}' falhou: {e}")
+        return None
+
+
 def main():
-    log("Buscando candidatos...")
-    candidates = collect_candidates()
-    log(f"{len(candidates)} candidatos únicos encontrados")
+    try:
+        log("Buscando candidatos...")
+        candidates = collect_candidates()
+        log(f"{len(candidates)} candidatos únicos (limite: {MAX_CANDIDATES})")
 
-    historico = load_log()
-    client    = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
+        if not candidates:
+            log("Nenhum candidato encontrado. Abortando.")
+            return
 
-    log("Selecionando tópico...")
-    selection = select_topic(candidates, historico, client)
+        historico = load_log()
+        client    = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
 
-    if selection.get("status") == "lista_vazia":
-        log("Nenhum candidato válido. Email não enviado.")
-        return
+        log("Selecionando tópico...")
+        selection = select_topic(candidates, historico, client)
 
-    topic = selection["top1"]
-    log(f"Tópico: {topic['titulo']}")
+        if selection.get("status") == "lista_vazia":
+            log("Nenhum candidato válido após filtragem. Email não enviado.")
+            return
 
-    log("Gerando conteúdo...")
-    content = generate_email(topic, client)
+        # tenta top1 → top2 → top3 em ordem
+        resultado = None
+        for chave in ["top1", "top2", "top3"]:
+            topic = selection.get(chave)
+            if not topic:
+                continue
+            log(f"Tentando {chave}: {topic['titulo']}")
+            resultado = try_topic(topic, client)
+            if resultado:
+                break
 
-    log("Enviando email...")
-    subject = send_email(content)
+        if not resultado:
+            log("Todos os tópicos falharam na validação. Email não enviado.")
+            return
 
-    save_log(topic["titulo"])
-    log(f"Concluído: {subject}")
+        subject, body = resultado
+
+        log(f"Enviando: {subject}")
+        send_email(subject, body)
+
+        # só loga após envio confirmado
+        save_log(topic["titulo"])
+        log("Concluído.")
+
+    except Exception as e:
+        log(f"Erro crítico: {e}")
+        raise
 
 
 if __name__ == "__main__":
