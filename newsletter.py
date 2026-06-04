@@ -144,7 +144,21 @@ Se nenhum candidato for válido: {{"status": "lista_vazia"}}"""
     r    = client.messages.create(model=MODEL, max_tokens=800,
                                   messages=[{"role": "user", "content": prompt}])
     text = r.content[0].text.strip()
-    return json.loads(text[text.find("{"):text.rfind("}") + 1])
+
+    # remove bloco markdown se presente (```json ... ```)
+    if "```" in text:
+        import re
+        match = re.search(r"```(?:json)?\s*([\s\S]*?)```", text)
+        if match:
+            text = match.group(1).strip()
+
+    start = text.find("{")
+    end   = text.rfind("}") + 1
+
+    if start == -1 or end == 0:
+        return {"status": "lista_vazia"}
+
+    return json.loads(text[start:end])
 
 
 def generate_email(topic, client):
