@@ -1,0 +1,39 @@
+name: Newsletter Diária
+
+on:
+  schedule:
+    - cron: '0 11 * * *'  # 8h Brasília (UTC-3)
+  workflow_dispatch:        # permite rodar manualmente
+
+permissions:
+  contents: write
+
+jobs:
+  enviar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependências
+        run: pip install -r requirements.txt
+
+      - name: Executar newsletter
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+        run: python newsletter.py
+
+      - name: Salvar log
+        run: |
+          git config user.email "action@github.com"
+          git config user.name "Newsletter Bot"
+          git add log.txt
+          git diff --staged --quiet || git commit -m "log: $(date +'%Y-%m-%d')"
+          git push
