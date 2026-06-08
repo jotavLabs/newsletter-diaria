@@ -3,3 +3,4 @@
 2026-06-05: DNQ: Deep Nash Q-Network for Partially Observable n-Player Games
 2026-06-06: Regret Minimization with Adaptive Opponents in Repeated Games
 2026-06-07: MLEvolve: A Self-Evolving Framework for Automated Machine Learning Algorithm Discovery
+2026-06-08: How AI Agents Reshape Knowledge Work: Autonomy, Efficiency, and Scope
