@@ -4,3 +4,4 @@
 2026-06-06: Regret Minimization with Adaptive Opponents in Repeated Games
 2026-06-07: MLEvolve: A Self-Evolving Framework for Automated Machine Learning Algorithm Discovery
 2026-06-08: How AI Agents Reshape Knowledge Work: Autonomy, Efficiency, and Scope
+2026-06-09: OmniGameArena: A Unified UE5 Benchmark for VLM Game Agents with Improvement Dynamics
