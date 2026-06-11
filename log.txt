@@ -6,3 +6,4 @@
 2026-06-08: How AI Agents Reshape Knowledge Work: Autonomy, Efficiency, and Scope
 2026-06-09: OmniGameArena: A Unified UE5 Benchmark for VLM Game Agents with Improvement Dynamics
 2026-06-10: EEVEE: Towards Test-time Prompt Learning in the Real World for Self-Improving Agents
+2026-06-11: ATLAS: Active Theory Learning for Automated Science
