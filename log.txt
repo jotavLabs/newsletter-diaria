@@ -10,3 +10,4 @@
 2026-06-12: EurekAgent: Agent Environment Engineering is All You Need For Autonomous Scientific Discovery
 2026-06-14: Learning to Reason by Analogy via Retrieval-Augmented Reinforcement Fine-Tuning
 2026-06-15: Learning Coordinated Preference for Multi-Objective Multi-Agent Reinforcement Learning
+2026-06-16: Context-Aware RL for Agentic and Multimodal LLMs
