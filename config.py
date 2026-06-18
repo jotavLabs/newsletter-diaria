@@ -3,23 +3,22 @@
 # ─────────────────────────────────────────────
 
 INTERESSES = [
-    "inteligência artificial aplicada",
-    "produtividade e sistemas pessoais",
-    "empreendedorismo e produto digital",
-    "Conceitos e Debates Filosóficos, filósofos",
-    "Conceitos de gerenciamento de projetos",
-    "Estratégia de estudo e memorização",
-    "Conceitos e Jogos estratégicos, exemplo xadrez",
-    "Avanços e descobertas científicas",
-    "Fisíca e mecânica quântica",
-    "Avanços técnologicos",
-    "Noticías políticas internacionais",
-    "Métodos e hábitos para se tornar millionário",
-    "Noticias de ações e criptomoedas",
-    "Técnicas e conceitos da calistenia",
-    "Tendências do mercado financeiro",
-    "Filosofia e técnicas russas",
+    "fórmulas e curiosidades matemáticas",
+    "biologia molecular e genética",
+    "ecologia e biodiversidade",
+    "evolução e teoria darwiniana",
+    "química orgânica e inorgânica",
+    "geografia física e humana",
+    "filosofia antiga e contemporânea",
+    "correntes e escolas filosóficas",
+    "métodos de aprendizado de alta performance Harvard MIT",
+    "técnicas de memorização e neurociência cognitiva",
+    "física quântica e cosmologia",
+    "lógica e matemática pura",
+    "história da ciência e grandes descobertas",
+    "psicologia cognitiva e aprendizado",
+    "antropologia e arqueologia",
 ]
 
-EMAIL_DESTINO   = "joaovbs.jvbs@gmail.com"   # email que vai RECEBER a newsletter
+EMAIL_DESTINOS  = ["joaovbs.jvbs@gmail.com", "goliveirajv@gmail.com"]
 EMAIL_REMETENTE = "joaovbs.jvbs@gmail.com"   # Gmail que vai ENVIAR (o mesmo da senha de app)
