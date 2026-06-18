@@ -10,7 +10,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import anthropic
 
-from config import INTERESSES, EMAIL_DESTINO, EMAIL_REMETENTE
+from config import INTERESSES, EMAIL_DESTINOS, EMAIL_REMETENTE
 
 MODEL           = "claude-sonnet-4-5"
 LOG             = "log.txt"
@@ -70,6 +70,12 @@ FRASES = [
     "A curiosidade é a mãe de todas as ciências. — Leonardo da Vinci",
 ]
 
+SCIENCE_KEYWORDS = [
+    "biologia", "genética", "ecologia", "química", "física", "matemática",
+    "fórmula", "evolução", "cosmologia", "filosofia", "geografia",
+    "memorização", "aprendizado", "neurociência", "antropologia", "arqueologia",
+]
+
 
 # ── FETCH ──────────────────────────────────────────────────────────────────────
 
@@ -93,22 +99,23 @@ def fetch_hn():
 
 
 def fetch_arxiv():
-    # só busca arXiv se o usuário tiver interesse em áreas técnicas/científicas
-    tech_keywords = ["ia", "inteligência artificial", "machine learning", "ml",
-                     "ciência", "tecnologia", "programação", "dados", "física", "matemática"]
-    tem_interesse_tecnico = any(
-        any(kw in i.lower() for kw in tech_keywords)
+    tem_interesse_cientifico = any(
+        any(kw in i.lower() for kw in SCIENCE_KEYWORDS)
         for i in INTERESSES
     )
-    if not tem_interesse_tecnico:
+    if not tem_interesse_cientifico:
         return []
 
     candidates = []
+    query = (
+        "cat:q-bio+OR+cat:physics+OR+cat:math.HO+OR+cat:math.NT"
+        "+OR+cat:cs.AI+OR+cat:cs.LG+OR+cat:astro-ph+OR+cat:quant-ph"
+    )
     try:
         url  = (
-            "https://export.arxiv.org/api/query"
-            "?search_query=cat:cs.AI+OR+cat:cs.LG+OR+cat:cs.CL"
-            "&sortBy=submittedDate&sortOrder=descending&max_results=15"
+            f"https://export.arxiv.org/api/query"
+            f"?search_query={query}"
+            f"&sortBy=submittedDate&sortOrder=descending&max_results=15"
         )
         feed = feedparser.parse(url)
         for e in feed.entries:
@@ -149,7 +156,6 @@ def collect_candidates():
         if c["url"] not in seen:
             seen.add(c["url"])
             unique.append(c)
-    # limita payload enviado ao Claude
     return unique[:MAX_CANDIDATES]
 
 
@@ -291,12 +297,12 @@ def send_email(subject, body):
     msg = MIMEMultipart("alternative")
     msg["Subject"] = subject
     msg["From"]    = EMAIL_REMETENTE
-    msg["To"]      = EMAIL_DESTINO
+    msg["To"]      = ", ".join(EMAIL_DESTINOS)
     msg.attach(MIMEText(body, "plain", "utf-8"))
 
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as s:
         s.login(EMAIL_REMETENTE, os.environ["GMAIL_APP_PASSWORD"])
-        s.sendmail(EMAIL_REMETENTE, EMAIL_DESTINO, msg.as_string())
+        s.sendmail(EMAIL_REMETENTE, EMAIL_DESTINOS, msg.as_string())
 
 
 # ── MAIN ───────────────────────────────────────────────────────────────────────
@@ -336,7 +342,6 @@ def main():
             log("Nenhum candidato válido após filtragem. Email não enviado.")
             return
 
-        # tenta top1 → top2 → top3 em ordem
         resultado = None
         for chave in ["top1", "top2", "top3"]:
             topic = selection.get(chave)
@@ -356,7 +361,6 @@ def main():
         log(f"Enviando: {subject}")
         send_email(subject, body)
 
-        # só loga após envio confirmado
         save_log(topic["titulo"])
         log("Concluído.")
 
