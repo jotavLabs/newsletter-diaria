@@ -14,3 +14,4 @@
 2026-06-17: Visual Verification Enables Inference-time Steering and Autonomous Policy Improvement
 2026-06-18: Quantum solitons and their quantum walks in transmon arrays
 2026-06-19: Topological Codes Based on Space Groups
+2026-06-21: Benchmark of quantum algorithms for ground state preparation in the presence of noise
