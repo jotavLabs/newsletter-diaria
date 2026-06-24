@@ -15,3 +15,4 @@
 2026-06-18: Quantum solitons and their quantum walks in transmon arrays
 2026-06-19: Topological Codes Based on Space Groups
 2026-06-21: Benchmark of quantum algorithms for ground state preparation in the presence of noise
+2026-06-24: The Sylow Divisor Condition: a Resolution of Erdős Problem 768
