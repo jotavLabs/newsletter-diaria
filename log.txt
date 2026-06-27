@@ -16,3 +16,4 @@
 2026-06-19: Topological Codes Based on Space Groups
 2026-06-21: Benchmark of quantum algorithms for ground state preparation in the presence of noise
 2026-06-24: The Sylow Divisor Condition: a Resolution of Erdős Problem 768
+2026-06-27: Amplified moments of the Riemann zeta function
