@@ -18,3 +18,4 @@
 2026-06-24: The Sylow Divisor Condition: a Resolution of Erdős Problem 768
 2026-06-27: Amplified moments of the Riemann zeta function
 2026-06-28: Weighted Fruit Diophantine Equations and Hyperelliptic Curves
+2026-06-29: Composing Quantum Instruments
