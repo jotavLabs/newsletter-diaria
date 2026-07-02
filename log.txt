@@ -19,3 +19,4 @@
 2026-06-27: Amplified moments of the Riemann zeta function
 2026-06-28: Weighted Fruit Diophantine Equations and Hyperelliptic Curves
 2026-06-29: Composing Quantum Instruments
+2026-07-02: Polynomial equivalence of the global transverse-field Ising model and the gate model of quantum computation
