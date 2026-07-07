@@ -22,3 +22,4 @@
 2026-07-02: Polynomial equivalence of the global transverse-field Ising model and the gate model of quantum computation
 2026-07-03: On the emergence of quantum many-body chaos for tunably-broken integrability
 2026-07-06: Symmetries of Pauli Noise from Lindbladian Dynamics
+2026-07-07: Logical Spectroscopy: Lifted-Product Codes with Addressable Bases
