@@ -27,3 +27,4 @@
 2026-07-09: Error bounds for the truncated Baker--Campbell--Hausdorff and Zassenhaus formulas in unitary problems
 2026-07-11: Hockey stick f-divergences
 2026-07-12: Plaquette: A hardware-aware design platform for fault-tolerant quantum computers
+2026-07-13: A Quantum Path to Partial Differential Equations
