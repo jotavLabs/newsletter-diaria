@@ -29,3 +29,4 @@
 2026-07-12: Plaquette: A hardware-aware design platform for fault-tolerant quantum computers
 2026-07-13: A Quantum Path to Partial Differential Equations
 2026-07-14: Trotter error compensation with polylogarithmic precision and nested-commutator scaling without ancillas
+2026-07-15: Ranks of Elliptic Curves Twisted by Quadratic Forms
