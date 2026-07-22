@@ -33,3 +33,4 @@
 2026-07-16: Strongly complete sets and a conjecture of Erdős
 2026-07-17: Locality of deep thermalisation through the lens of entanglement teleportation
 2026-07-20: Fast logical operations in quantum LDPC codes using simple resource states
+2026-07-22: On the $\mathcal{A}$-transcendence of a Champernowne-type constant
