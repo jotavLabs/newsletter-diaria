@@ -37,3 +37,4 @@
 2026-07-23: The sharp exponent for the minimal distance problem
 2026-07-24: Fault-tolerant quantum algorithms for simulating atomic nuclei
 2026-07-25: Flow-based Phase-space Tomography of Continuous-variable Quantum States
+2026-07-26: Fault-tolerant quantum algorithms for simulating atomic nuclei
