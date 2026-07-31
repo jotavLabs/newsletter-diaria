@@ -41,3 +41,4 @@
 2026-07-27: Correlated Coherent Errors in Stabilizer Codes: A General Cumulant Framework and Interference-Based Error Suppression
 2026-07-29: A Spectral Proof of the Hypergraph Moore Bound
 2026-07-30: Practical Quantum Topological Data Analysis with Applications to High-Dimensional Feature Extraction and Time Series Analysis
+2026-07-31: Logical computation with canonical lifted product codes
