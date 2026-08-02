@@ -43,3 +43,4 @@
 2026-07-30: Practical Quantum Topological Data Analysis with Applications to High-Dimensional Feature Extraction and Time Series Analysis
 2026-07-31: Logical computation with canonical lifted product codes
 2026-08-01: Learning to Trace Seiberg Dualities
+2026-08-02: $\mathbb Q\setminus\mathbb Z$ is diophantine over $\mathbb Q$ with $7$ unknowns
