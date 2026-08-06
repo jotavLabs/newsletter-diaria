@@ -46,3 +46,4 @@
 2026-08-02: $\mathbb Q\setminus\mathbb Z$ is diophantine over $\mathbb Q$ with $7$ unknowns
 2026-08-04: Nearly tight lower bounds for estimating quantum functionals: Uhlmann fidelity, trace distance, and von Neumann entropy
 2026-08-05: On Diophantine equations over the integer rings of quadratic fields
+2026-08-06: A fractional quantum Hall factory on quantum processors: constant-depth preparation of clustered non-Abelian states
