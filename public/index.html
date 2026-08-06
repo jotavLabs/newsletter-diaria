@@ -1,0 +1,1335 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Investir sem se dar mal — Mini-aula</title>
+<meta name="description" content="Mini-aula em 6 modulos sobre investimentos: resumo do capitulo, exemplos do dia a dia, dados de pesquisa e um recurso gratuito em cada modulo.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#EE5124">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Investir sem se dar mal — Mini-aula">
+<meta property="og:description" content="Deck de 34 slides: risco x retorno, perfil do investidor, poupanca, Selic, fundos, Tesouro Direto e acoes.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%B0%3C/text%3E%3C/svg%3E">
+<style>*,*::before,*::after{box-sizing:border-box}img,svg{max-width:100%}</style>
+</head>
+<body>
+<style>
+/* ============================================================
+   TOKENS — paleta derivada do próprio livro:
+   laranja de capa, papel off-white, tinta quente,
+   verde da caneta que circulou "Taxa Selic" na p.134
+   ============================================================ */
+:root{
+  --paper:#FCFBF9;
+  --ink:#191512;
+  --muted:#6E635B;
+  --line:#E6DFD7;
+  --line-soft:#F0EAE3;
+  --flame:#EE5124;
+  --flame-ink:#BF3811;
+  --wash:#FFF1EB;
+  --teal:#1B7A66;
+  --teal-wash:#E8F4F0;
+  --band:#EE5124;
+  --band-ink:#FFF4EF;
+  --band-dim:#FFCDBB;
+  --shadow:0 1px 2px rgba(25,21,18,.05), 0 14px 40px -18px rgba(25,21,18,.28);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#141110;
+    --ink:#F2ECE4;
+    --muted:#A2968C;
+    --line:#302A25;
+    --line-soft:#221D1A;
+    --flame:#FF6E42;
+    --flame-ink:#FF9067;
+    --wash:#261914;
+    --teal:#54BFA3;
+    --teal-wash:#132521;
+    --band:#D8451B;
+    --band-ink:#FFF2EC;
+    --band-dim:#F7BCA5;
+    --shadow:0 1px 2px rgba(0,0,0,.5), 0 18px 44px -20px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141110; --ink:#F2ECE4; --muted:#A2968C; --line:#302A25; --line-soft:#221D1A;
+  --flame:#FF6E42; --flame-ink:#FF9067; --wash:#261914; --teal:#54BFA3; --teal-wash:#132521;
+  --band:#D8451B; --band-ink:#FFF2EC; --band-dim:#F7BCA5;
+  --shadow:0 1px 2px rgba(0,0,0,.5), 0 18px 44px -20px rgba(0,0,0,.8);
+}
+:root[data-theme="light"]{
+  --paper:#FCFBF9; --ink:#191512; --muted:#6E635B; --line:#E6DFD7; --line-soft:#F0EAE3;
+  --flame:#EE5124; --flame-ink:#BF3811; --wash:#FFF1EB; --teal:#1B7A66; --teal-wash:#E8F4F0;
+  --band:#EE5124; --band-ink:#FFF4EF; --band-dim:#FFCDBB;
+  --shadow:0 1px 2px rgba(25,21,18,.05), 0 14px 40px -18px rgba(25,21,18,.28);
+}
+
+/* Tipografia: grotesca pesada no display (como os títulos do livro),
+   serifada no texto corrido (como o miolo), mono para dados e páginas */
+:root{
+  --display:"Arial Black","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --body:Georgia,"Iowan Old Style","Times New Roman",serif;
+  --util:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--body);
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ============================================================
+   PALCO — cada slide é uma caixa 16:9 escalada ao viewport
+   ============================================================ */
+.stage{
+  position:fixed;inset:0;margin:auto;
+  width:min(100vw, 177.78vh);height:min(100vh, 56.25vw);
+  container-type:size;
+  overflow:hidden;
+}
+.slide{
+  position:absolute;inset:0;
+  display:none;
+  grid-template-rows:auto 1fr auto;
+  gap:2.6cqh;
+  padding:5.4cqh 6cqh 4.4cqh;
+  font-size:clamp(9px, 2.42cqh, 34px);
+  line-height:1.45;
+}
+.slide.is-live{display:grid;animation:rise .34s cubic-bezier(.22,.7,.3,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(.8em)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){
+  .slide.is-live{animation:none}
+}
+
+/* ---------- cabeçalho de slide ---------- */
+.top{display:flex;align-items:baseline;justify-content:space-between;gap:1.2em;
+  border-bottom:1.5px solid var(--line);padding-bottom:.55em}
+.mod{font-family:var(--util);font-size:.62em;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mod b{color:var(--flame-ink);font-weight:700}
+.pg{font-family:var(--util);font-size:.58em;letter-spacing:.08em;color:var(--muted);white-space:nowrap}
+
+/* ---------- etapas: cada uma é uma das 4 fases da aula ---------- */
+.chip{
+  display:inline-block;font-family:var(--util);font-size:.55em;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;padding:.42em .85em;border-radius:2px;
+  vertical-align:middle;
+}
+.chip--resumo{border:1.5px solid var(--ink);color:var(--ink)}
+.chip--dia{background:var(--wash);color:var(--flame-ink);border:1.5px solid var(--flame)}
+.chip--dados{background:var(--ink);color:var(--paper)}
+.chip--recurso{background:var(--teal);color:#FFF}
+
+h1,h2,h3{margin:0;font-family:var(--display);font-weight:900;text-wrap:balance;
+  letter-spacing:-.022em;line-height:1.02}
+h2{font-size:2.05em}
+h2 .sub{display:block;font-size:.42em;font-family:var(--body);font-weight:400;
+  letter-spacing:0;line-height:1.35;color:var(--muted);margin-top:.7em;font-style:italic}
+h3{font-size:.82em;font-family:var(--util);font-weight:700;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--flame-ink)}
+
+.body{align-self:center;min-height:0}
+blockquote{margin:0}
+p{margin:0 0 .7em;max-width:34em}
+p:last-child{margin-bottom:0}
+strong{font-weight:700}
+em{font-style:italic}
+
+/* ---------- listas ---------- */
+ul{margin:0;padding:0;list-style:none;display:grid;gap:.72em}
+ul li{position:relative;padding-left:1.5em;max-width:36em}
+ul li::before{content:"";position:absolute;left:0;top:.62em;width:.62em;height:.62em;
+  background:var(--flame);clip-path:polygon(0 0,100% 50%,0 100%)}
+ul.plain li::before{clip-path:none;border-radius:50%;width:.36em;height:.36em;top:.55em;
+  background:var(--muted)}
+
+ol.steps{margin:0;padding:0;list-style:none;display:grid;gap:.62em;counter-reset:s}
+ol.steps li{counter-increment:s;position:relative;padding-left:2.1em;max-width:36em}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:.06em;
+  font-family:var(--util);font-size:.72em;font-weight:700;color:var(--flame-ink);
+  border:1.5px solid var(--flame);border-radius:50%;width:1.9em;height:1.9em;
+  display:grid;place-items:center}
+
+/* ---------- grades ---------- */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:1.6em;align-items:start}
+.cols-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1em;align-items:stretch}
+
+.card{border:1.5px solid var(--line);border-radius:3px;padding:1em 1.1em;background:var(--paper);
+  display:grid;gap:.42em;align-content:start}
+.card h4{margin:0;font-family:var(--util);font-size:.6em;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);font-weight:700}
+.card p{font-size:.9em;margin:0}
+
+/* caixa pontilhada — igual aos boxes do livro */
+.boxed{position:relative;padding:1.15em 1.3em;background:var(--paper)}
+.boxed::before{content:"";position:absolute;inset:0;pointer-events:none;
+  border:2px solid transparent;
+  background:
+    repeating-linear-gradient(-45deg,var(--flame) 0 2px,transparent 2px 5px) border-box;
+  -webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+}
+.boxed h4{margin:0 0 .5em;font-family:var(--util);font-size:.6em;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--flame-ink);font-weight:700}
+
+/* ---------- tabelas ---------- */
+.tw{overflow-x:auto;max-width:100%}
+table{border-collapse:collapse;width:100%;font-size:.88em}
+th,td{text-align:left;padding:.5em .7em;border-bottom:1px solid var(--line)}
+th{font-family:var(--util);font-size:.72em;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);font-weight:700;border-bottom:1.5px solid var(--ink)}
+td.num,th.num{text-align:right;font-family:var(--util);font-variant-numeric:tabular-nums}
+tr:last-child td{border-bottom:none}
+tr.hi td{background:var(--wash);font-weight:700}
+
+/* ---------- bloco de cálculo ---------- */
+.calc{font-family:var(--util);font-variant-numeric:tabular-nums;font-size:.82em;
+  background:var(--line-soft);border-left:3px solid var(--flame);
+  padding:.9em 1.1em;display:grid;gap:.3em;border-radius:0 3px 3px 0}
+.calc .r{display:flex;justify-content:space-between;gap:2em}
+.calc .r b{font-weight:700}
+.calc .win{color:var(--teal)}
+.calc .lose{color:var(--flame-ink)}
+
+/* ---------- números grandes (slides de pesquisa) ---------- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(7em,1fr));gap:1.4em;align-items:stretch}
+.stat{display:grid;grid-template-rows:auto 1fr;align-content:start}
+.stat .n{font-family:var(--display);font-size:2.5em;line-height:.92;letter-spacing:-.04em;
+  font-variant-numeric:tabular-nums;color:var(--flame-ink);display:block}
+.stat .n small{font-size:.42em;letter-spacing:-.01em}
+.stat .l{display:block;margin-top:.5em;font-size:.78em;line-height:1.3;color:var(--muted);
+  border-top:1.5px solid var(--line);padding-top:.5em;max-width:12em}
+
+/* ---------- citação ---------- */
+.pull{font-family:var(--display);font-size:1.5em;line-height:1.14;letter-spacing:-.02em;
+  text-wrap:balance;max-width:20em}
+.pull .mark{color:var(--flame)}
+.src{font-family:var(--util);font-size:.6em;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);margin-top:1.2em}
+
+/* frase grifada, como o marca-texto salmão da p.127 */
+.hl{background:linear-gradient(transparent 58%,var(--band-dim) 58% 96%,transparent 96%);
+  padding:0 .1em}
+
+/* ---------- alerta / armadilha ---------- */
+.warn{border-left:3px solid var(--flame);padding:.2em 0 .2em 1em}
+.warn h4{margin:0 0 .35em;font-family:var(--util);font-size:.62em;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--flame-ink);font-weight:700}
+
+/* ---------- recurso gratuito ---------- */
+.res{display:grid;gap:.9em;border:1.5px solid var(--teal);border-radius:3px;
+  background:var(--teal-wash);padding:1.2em 1.4em;max-width:38em}
+.res .name{font-family:var(--display);font-size:1.32em;letter-spacing:-.02em;line-height:1.05}
+.res .url{font-family:var(--util);font-size:.76em;color:var(--teal);word-break:break-all}
+.res p{font-size:.9em;margin:0}
+.res .todo{border-top:1.5px solid color-mix(in srgb,var(--teal) 35%,transparent);padding-top:.8em;
+  font-size:.86em;font-style:italic}
+
+/* ============================================================
+   SLIDES ESPECIAIS
+   ============================================================ */
+/* capa */
+/* nunca redeclarar position aqui: .slide já é absolute com inset:0 e é o
+   bloco de contenção do .zig — sobrescrever colapsa a altura do slide */
+.slide--cover{grid-template-rows:1fr auto;background:var(--paper);overflow:hidden}
+.slide--cover .zig{position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(var(--flame) 1.15px,transparent 1.2px);
+  background-size:9px 9px;opacity:.3;
+  clip-path:polygon(100% 0,100% 100%,58% 100%,72% 74%,50% 74%,64% 46%,42% 46%,58% 16%,36% 16%,52% 0)}
+.slide--cover .m{align-self:center;position:relative;z-index:1}
+.slide--cover h1{font-size:3.5em;line-height:.94;max-width:11em}
+.slide--cover .kick{font-family:var(--util);font-size:.66em;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--flame-ink);margin-bottom:1.1em;font-weight:700}
+.slide--cover .lede{font-size:1.05em;color:var(--muted);max-width:26em;margin-top:1.1em;font-style:italic}
+/* tudo à esquerda: o canto inferior direito pertence à barra de controles */
+.slide--cover .foot{display:flex;justify-content:flex-start;align-items:end;flex-wrap:wrap;gap:.5em 2.2em;
+  border-top:1.5px solid var(--ink);padding-top:.8em;font-family:var(--util);font-size:.6em;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted);position:relative;z-index:1}
+
+/* abertura de módulo — página laranja cheia, como a p.136 */
+.slide--band{background:var(--band);color:var(--band-ink);grid-template-rows:auto 1fr auto;overflow:hidden}
+.slide--band::after{content:"";position:absolute;right:-4cqh;top:-4cqh;width:44%;height:130%;
+  background-image:repeating-linear-gradient(-90deg,var(--band-ink) 0 5px,transparent 5px 13px);
+  opacity:.28;transform:skewX(-14deg);pointer-events:none}
+.slide--band .top{border-bottom-color:color-mix(in srgb,var(--band-ink) 45%,transparent)}
+.slide--band .mod,.slide--band .pg{color:color-mix(in srgb,var(--band-ink) 82%,transparent)}
+.slide--band .mod b{color:var(--band-ink)}
+.slide--band .num{font-family:var(--display);font-size:5.4em;line-height:.8;letter-spacing:-.05em;
+  opacity:.34;position:relative;z-index:1}
+.slide--band h2{font-size:2.5em;position:relative;z-index:1;max-width:13em}
+.slide--band .m{align-self:center;display:grid;gap:.5em;position:relative;z-index:1}
+.slide--band .agenda{display:flex;gap:.5em;flex-wrap:wrap;position:relative;z-index:1;
+  font-family:var(--util);font-size:.58em;letter-spacing:.14em;text-transform:uppercase}
+.slide--band .agenda span{border:1.5px solid color-mix(in srgb,var(--band-ink) 55%,transparent);
+  padding:.4em .8em;border-radius:2px}
+
+/* fecho em laranja */
+.slide--final{background:var(--band);color:var(--band-ink);place-content:center;
+  grid-template-rows:1fr;text-align:left}
+.slide--final .pull{font-size:2.05em;max-width:16em}
+.slide--final .src{color:color-mix(in srgb,var(--band-ink) 75%,transparent)}
+
+/* ============================================================
+   CROMO DA APRESENTAÇÃO
+   ============================================================ */
+.rail{position:fixed;left:0;right:0;bottom:0;height:3px;background:var(--line-soft);z-index:40}
+.rail i{display:block;height:100%;background:var(--flame);width:0;transition:width .3s ease}
+@media (prefers-reduced-motion: reduce){.rail i{transition:none}}
+
+/* plaquinha própria: os controles precisam continuar legíveis sobre os slides laranja */
+.hud{position:fixed;right:1.1rem;bottom:.9rem;z-index:41;display:flex;gap:.5rem;align-items:center;
+  font-family:var(--util);font-size:.72rem;letter-spacing:.08em;color:var(--muted);
+  background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:.34rem .55rem;
+  box-shadow:var(--shadow)}
+.hud .count{font-variant-numeric:tabular-nums}
+.hud .count b{color:var(--ink)}
+.hud button{font:inherit;letter-spacing:inherit;color:var(--muted);background:transparent;
+  border:1px solid var(--line);border-radius:2px;padding:.3em .55em;cursor:pointer;
+  text-transform:uppercase}
+.hud button:hover{color:var(--ink);border-color:var(--ink)}
+.hud button:focus-visible,.ov li button:focus-visible{outline:2px solid var(--flame);outline-offset:2px}
+.hud .timer{font-variant-numeric:tabular-nums;display:none}
+.hud .timer.on{display:inline}
+
+.nav{position:fixed;top:0;bottom:0;width:16vw;max-width:180px;z-index:30;border:0;background:transparent;
+  cursor:pointer;opacity:0}
+.nav--prev{left:0}.nav--next{right:0}
+.nav:focus-visible{opacity:1;background:color-mix(in srgb,var(--flame) 12%,transparent)}
+
+/* painel de notas */
+.notes{display:none}
+.npanel{position:fixed;left:0;right:0;bottom:0;max-height:42vh;overflow:auto;z-index:45;
+  background:var(--paper);border-top:3px solid var(--flame);padding:1.1rem 1.4rem 1.6rem;
+  box-shadow:var(--shadow);display:none}
+.npanel.on{display:block}
+.npanel h5{margin:0 0 .5rem;font-family:var(--util);font-size:.62rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--flame-ink)}
+.npanel .inner{font-size:.95rem;line-height:1.5;max-width:60em}
+.npanel .inner p{margin:0 0 .55em}
+.npanel .inner .say{font-family:var(--display);font-size:1.05rem;line-height:1.25;letter-spacing:-.015em}
+
+/* visão geral */
+.ov{position:fixed;inset:0;z-index:50;background:var(--paper);overflow:auto;padding:2.2rem 2rem 4rem;display:none}
+.ov.on{display:block}
+.ov h5{margin:0 0 1.4rem;font-family:var(--display);font-size:1.5rem;letter-spacing:-.02em}
+.ov .grp{margin-bottom:1.5rem}
+.ov .glab{font-family:var(--util);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--flame-ink);border-bottom:1.5px solid var(--line);padding-bottom:.35rem;margin-bottom:.5rem}
+.ov ul{gap:0}
+.ov li{padding:0}
+.ov li::before{display:none}
+.ov li button{display:flex;gap:.9rem;width:100%;text-align:left;background:transparent;border:0;
+  border-bottom:1px solid var(--line-soft);padding:.42rem .3rem;cursor:pointer;color:var(--ink);
+  font-family:var(--body);font-size:.95rem;align-items:baseline}
+.ov li button:hover{background:var(--wash)}
+.ov li button.cur{background:var(--wash);font-weight:700}
+.ov li i{font-family:var(--util);font-style:normal;font-size:.72rem;color:var(--muted);
+  font-variant-numeric:tabular-nums;min-width:2.2em}
+.ov li em{font-family:var(--util);font-style:normal;font-size:.6rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--flame-ink);margin-left:auto;white-space:nowrap}
+
+/* ajuda */
+.help{position:fixed;inset:0;z-index:60;background:color-mix(in srgb,var(--ink) 78%,transparent);
+  display:none;place-items:center;padding:2rem}
+.help.on{display:grid}
+.help .box{background:var(--paper);border-radius:4px;padding:1.8rem 2rem;max-width:34rem;
+  box-shadow:var(--shadow)}
+.help h5{margin:0 0 1rem;font-family:var(--display);font-size:1.3rem;letter-spacing:-.02em}
+.help dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:.5rem 1.2rem;align-items:baseline}
+.help dt{font-family:var(--util);font-size:.78rem;font-weight:700;
+  border:1px solid var(--line);border-radius:3px;padding:.15em .5em;justify-self:start}
+.help dd{margin:0;font-size:.92rem}
+
+@media (max-width: 640px){
+  .hud{font-size:.62rem;right:.6rem;bottom:.5rem}
+  .nav{width:24vw}
+}
+
+/* impressão: vira apostila, um slide por página */
+@media print{
+  html,body{overflow:visible;height:auto;background:#fff}
+  .stage{position:static;width:auto;height:auto;container-type:normal}
+  .slide{display:grid !important;position:static;page-break-after:always;
+    min-height:15cm;font-size:11pt;border-bottom:1px solid #ccc;padding:1.4cm}
+  .slide--band,.slide--final{background:#fff;color:#000}
+  .slide--band::after,.slide--cover .zig{display:none}
+  .rail,.hud,.nav,.npanel,.ov,.help{display:none !important}
+  .notes{display:block;margin-top:1em;border-top:1px dashed #999;padding-top:.6em;font-size:9pt}
+}
+</style>
+
+<div class="stage" id="stage">
+
+<!-- ══════════════ CAPA ══════════════ -->
+<section class="slide slide--cover" data-grp="Abertura" data-t="Capa">
+  <div class="zig"></div>
+  <div class="m">
+    <div class="kick">Mini-aula · Educação Financeira</div>
+    <h1>Investir sem se dar mal</h1>
+    <p class="lede">A lógica por trás de qualquer investimento — em 6 módulos, cada um com resumo, exemplos do dia a dia, dados de pesquisa e um recurso gratuito.</p>
+  </div>
+  <div class="foot">
+    <span>Capítulo de Investimentos · pp. 126–137</span>
+    <span>→ ou espaço para avançar · ? para atalhos</span>
+  </div>
+  <aside class="notes">
+    <p class="say">"Quanto do seu dinheiro está trabalhando pra você agora, enquanto você está sentado aqui?"</p>
+    <p>Abertura curta. Não explique a estrutura ainda — faça a pergunta, deixe o silêncio, e só então vá para o roteiro.</p>
+  </aside>
+</section>
+
+<!-- ══════════════ ROTEIRO ══════════════ -->
+<section class="slide" data-grp="Abertura" data-t="Roteiro e estrutura">
+  <div class="top"><span class="mod">Como esta aula funciona</span><span class="pg">Roteiro</span></div>
+  <div class="body">
+    <div class="cols">
+      <div>
+        <h3>Os 6 módulos</h3>
+        <ul style="margin-top:.7em">
+          <li><b>1.</b> O que é investir e como o dinheiro rende <span class="pg">pp. 126–127</span></li>
+          <li><b>2.</b> Risco × retorno e a armadilha emocional <span class="pg">pp. 127–129</span></li>
+          <li><b>3.</b> Perfil, prazo e a proteção da CVM <span class="pg">pp. 129–131</span></li>
+          <li><b>4.</b> Renda fixa, renda variável e poupança <span class="pg">pp. 131–133</span></li>
+          <li><b>5.</b> Taxa Selic e fundos de investimento <span class="pg">pp. 134–135</span></li>
+          <li><b>6.</b> Tesouro Direto, ações e bolsa <span class="pg">pp. 136–137</span></li>
+        </ul>
+      </div>
+      <div style="display:grid;gap:1.1em">
+        <div>
+          <h3>As 4 etapas de cada módulo</h3>
+          <div style="display:flex;gap:.5em;flex-wrap:wrap;margin-top:.8em">
+            <span class="chip chip--resumo">Resumo</span>
+            <span class="chip chip--dia">Dia a dia</span>
+            <span class="chip chip--dados">Pesquisa</span>
+            <span class="chip chip--recurso">Recurso grátis</span>
+          </div>
+        </div>
+        <div class="tw">
+          <table>
+            <tr><th>Versão</th><th>Distribuição</th></tr>
+            <tr><td>30 min</td><td>Abertura 2' · módulos 4' cada · fecho 4'</td></tr>
+            <tr><td>60 min</td><td>Abertura 3' · módulos 8' cada · fecho 9'</td></tr>
+            <tr><td>6 dias</td><td>Um módulo por dia (formato newsletter)</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">
+    <p>Mostre a estrutura uma vez só e não volte a ela — a repetição dos 4 chips em cada módulo já ensina o padrão sozinha.</p>
+    <p>Tecla <b>T</b> liga o cronômetro. Tecla <b>O</b> abre a lista de slides se precisar pular.</p>
+  </aside>
+</section>
+
+<!-- ══════════════ GANCHO ══════════════ -->
+<section class="slide" data-grp="Abertura" data-t="Gancho — a frase e a pergunta">
+  <div class="top"><span class="mod">Abertura</span><span class="pg">p. 126</span></div>
+  <div class="body">
+    <blockquote class="pull">"Muitos sonhos não são realizados por falta de <span class="mark">planejamento</span> — não por falta de dinheiro."</blockquote>
+    <p class="src">Ideia-mãe do capítulo</p>
+  </div>
+  <aside class="notes">
+    <p class="say">"Quanto do seu dinheiro está trabalhando pra você agora?"</p>
+    <p>Escreva a frase no quadro antes de mostrar o slide seguinte com os números. O contraste entre a frase e o dado de 36% é o que prende a turma.</p>
+  </aside>
+</section>
+
+<section class="slide" data-grp="Abertura" data-t="O tamanho do problema">
+  <div class="top"><span class="mod">Abertura · <b>o tamanho do problema</b></span><span class="chip chip--dados">Pesquisa</span></div>
+  <div class="body">
+    <div class="stats">
+      <div class="stat"><span class="n">36<small>%</small></span><span class="l">da população tem algum investimento financeiro</span></div>
+      <div class="stat"><span class="n">60,6<small> mi</small></span><span class="l">de investidores no país</span></div>
+      <div class="stat"><span class="n">107,7<small> mi</small></span><span class="l">de pessoas <b>não investem nada</b></span></div>
+    </div>
+    <p class="src">ANBIMA / Datafolha — Raio X do Investidor Brasileiro, 9ª edição</p>
+  </div>
+  <aside class="notes">
+    <p class="say">"Se investir fosse difícil, esse número seria explicável. Ele não é difícil — é desconhecido. É isso que a gente vai resolver na próxima hora."</p>
+  </aside>
+</section>
+
+<!-- ══════════════════════════════ MÓDULO 1 ══════════════════════════════ -->
+<section class="slide slide--band" data-grp="Módulo 1" data-t="Abertura do módulo 1">
+  <div class="top"><span class="mod">Módulo</span><span class="pg">pp. 126–127</span></div>
+  <div class="m">
+    <div class="num">01</div>
+    <h2>O que é investir e como o dinheiro rende</h2>
+  </div>
+  <div class="agenda"><span>Resumo</span><span>Dia a dia</span><span>Pesquisa</span><span>Recurso</span></div>
+  <aside class="notes"><p>~4 min na versão curta, ~8 min na longa. É o módulo mais importante: se só um conceito sobreviver à aula, que seja juros compostos.</p></aside>
+</section>
+
+<section class="slide" data-grp="Módulo 1" data-t="Definição e as 3 formas de ganhar">
+  <div class="top"><span class="mod">Módulo <b>01</b> · O que é investir</span><span class="chip chip--resumo">Resumo</span></div>
+  <div class="body">
+    <div class="cols">
+      <div>
+        <p>Investimento financeiro é <strong>empregar o dinheiro poupado numa aplicação que rende</strong>, esperando resgatar mais do que se aplicou.</p>
+        <p>Não é coisa de "quem tem dinheiro sobrando" — é ferramenta de <strong>quem tem objetivo</strong>, de curto, médio ou longo prazo.</p>
+        <div class="boxed" style="margin-top:1em">
+          <h4>O termo "investimento"</h4>
+          <p style="font-size:.88em">Também vale para o empresário que compra equipamento (capital produtivo) — e para <strong>você pagando um curso</strong>. Capital humano conta.</p>
+        </div>
+      </div>
+      <div>
+        <h3>As 3 formas de ganhar</h3>
+        <div class="tw" style="margin-top:.6em">
+          <table>
+            <tr><th>Mecanismo</th><th>Como funciona</th><th>Onde</th></tr>
+            <tr><td><b>Juros</b></td><td>Você empresta, pagam pelo tempo</td><td>Poupança, CDB, Tesouro</td></tr>
+            <tr><td><b>Dividendos</b></td><td>Você é sócio, recebe do lucro</td><td>Ações</td></tr>
+            <tr><td><b>Ganho de capital</b></td><td>Compra barato, vende caro</td><td>Ações, imóveis</td></tr>
+          </table>
+        </div>
+        <p style="margin-top:.9em;font-size:.88em;color:var(--muted)"><strong>O banco é o intermediário:</strong> paga juros a quem poupa, cobra de quem toma emprestado.</p>
+      </div>
+    </div>
+  </div>
+  <aside class="notes"><p>Três mecanismos, só. Tudo que aparecer no resto da aula é combinação desses três. Repita isso — dá segurança pra quem acha o assunto grande demais.</p></aside>
+</section>
+
+<section class="slide" data-grp="Módulo 1" data-t="Juros compostos — a prova">
+  <div class="top"><span class="mod">Módulo <b>01</b> · Juros compostos</span><span class="chip chip--resumo">Resumo</span></div>
+  <div class="body">
+    <div class="cols">
+      <div>
+        <h2 style="font-size:1.5em">Juro rendendo sobre juro</h2>
+        <p style="margin-top:.8em">Os juros incidem sobre o principal <strong>e sobre os juros já acumulados</strong>. É por isso que o patrimônio cresce mais rápido do que a intuição sugere.</p>
+        <p class="hl" style="display:inline-block;font-weight:700">Parece migalha em 1 ano. Em 20, é outra vida.</p>
+      </div>
+      <div>
+        <div class="calc">
+          <div class="r"><span>R$ 1.000 a 0,5% ao mês</span></div>
+          <div class="r"><span>Mês 0</span><b>R$ 1.000,00</b></div>
+          <div class="r"><span>Mês 6</span><b>R$ 1.030,35</b></div>
+          <div class="r"><span>Mês 12</span><b>R$ 1.061,65</b></div>
+        </div>
+        <div class="tw" style="margin-top:1em">
+          <table>
+            <tr><th>No ano</th><th class="num">Taxa</th></tr>
+            <tr><td>Juro simples (0,5 × 12)</td><td class="num">6,00%</td></tr>
+            <tr class="hi"><td>Juro composto (real)</td><td class="num">6,17%</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">
+    <p class="say">"Juro composto é a única força que funciona nos dois sentidos. Ou ele trabalha pra você, ou ele trabalha contra você. Não existe neutro."</p>
+    <p>Guarde essa frase — ela volta no módulo 2 quando falarmos de dívida de cartão.</p>
+  </aside>
+</section>
+
+<section class="slide" data-grp="Módulo 1" data-t="Dia a dia — módulo 1">
+  <div class="top"><span class="mod">Módulo <b>01</b></span><span class="chip chip--dia">Dia a dia</span></div>
+  <div class="body">
+    <ul>
+      <li><strong>O celular vs. o rendimento.</strong> R$ 3.000 no celular novo = R$ 3.000 que param de existir. Os mesmos R$ 3.000 a 1% a.m. viram ~R$ 3.380 em um ano. Você não "deixou de comprar" — comprou tempo.</li>
+      <li><strong>O cafezinho de R$ 8/dia.</strong> São R$ 240/mês. A 0,8% a.m., passa de R$ 45 mil em 10 anos. Não é pra parar de tomar café — é pra entender a escala.</li>
+      <li><strong>O 13º e a restituição do IR.</strong> Dinheiro que cai "de bônus" é o mais fácil de investir, porque o orçamento já vive sem ele.</li>
+      <li><strong>A dívida do cartão que dobrou.</strong> Todo mundo entende juro composto quando ele é cobrado. É a mesma matemática — só que apontada pra você.</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>Peça um exemplo da turma antes de mostrar os seus. Se alguém citar a dívida do cartão sozinho, você ganhou o módulo.</p></aside>
+</section>
+
+<section class="slide" data-grp="Módulo 1" data-t="Pesquisa — o gargalo é o 2º passo">
+  <div class="top"><span class="mod">Módulo <b>01</b> · O gargalo não é guardar</span><span class="chip chip--dados">Pesquisa</span></div>
+  <div class="body">
+    <div class="stats">
+      <div class="stat"><span class="n">33<small>%</small></span><span class="l">conseguiram poupar em 2025</span></div>
+      <div class="stat"><span class="n">12<small>%</small></span><span class="l">desse grupo transformaram a poupança em investimento</span></div>
+      <div class="stat"><span class="n">78,9<small>%</small></span><span class="l">das famílias endividadas em dez/2025 — recorde para o mês</span></div>
+      <div class="stat"><span class="n">29,4<small>%</small></span><span class="l">de inadimplência</span></div>
+    </div>
+    <p class="src">ANBIMA/Datafolha · Peic — CNC</p>
+  </div>
+  <aside class="notes">
+    <p class="say">"O gargalo do brasileiro não é guardar. É dar o segundo passo. É exatamente esse passo que esta aula ensina."</p>
+    <p>O pico da série foi 79,5% em outubro/2025.</p>
+  </aside>
+</section>
+
+<section class="slide" data-grp="Módulo 1" data-t="Recurso — Calculadora do Cidadão">
+  <div class="top"><span class="mod">Módulo <b>01</b></span><span class="chip chip--recurso">Recurso gratuito</span></div>
+  <div class="body">
+    <div class="res">
+      <div>
+        <div class="name">Calculadora do Cidadão</div>
+        <div class="url">bcb.gov.br → Calculadora do Cidadão</div>
+      </div>
+      <p>Ferramenta oficial do Banco Central, gratuita e sem cadastro. Corrige valores, simula aplicação com depósitos regulares e calcula financiamentos. <strong>É a citada pelo próprio livro.</strong></p>
+      <p class="todo">Atividade: cada aluno simula R$ 100/mês por 10 anos. O silêncio na sala é a aula.</p>
+    </div>
+  </div>
+  <aside class="notes"><p>Se houver projetor com internet, faça a simulação ao vivo. Ver o número aparecer vale mais que qualquer slide.</p></aside>
+</section>
+
+<!-- ══════════════════════════════ MÓDULO 2 ══════════════════════════════ -->
+<section class="slide slide--band" data-grp="Módulo 2" data-t="Abertura do módulo 2">
+  <div class="top"><span class="mod">Módulo</span><span class="pg">pp. 127–129</span></div>
+  <div class="m">
+    <div class="num">02</div>
+    <h2>Risco × retorno e a armadilha emocional</h2>
+  </div>
+  <div class="agenda"><span>Resumo</span><span>Dia a dia</span><span>Pesquisa</span><span>Recurso</span></div>
+  <aside class="notes"><p>Módulo de maior impacto emocional. Não corra — é aqui que a turma decide se confia em você.</p></aside>
+</section>
+
+<section class="slide" data-grp="Módulo 2" data-t="A lei da gravidade das finanças">
+  <div class="top"><span class="mod">Módulo <b>02</b> · Risco × retorno</span><span class="chip chip--resumo">Resumo</span></div>
+  <div class="body">
+    <div class="cols">
+      <div>
+        <p><strong>Risco</strong> = possibilidade de acontecer um evento desfavorável: o negócio dar errado, a empresa falir, você perder dinheiro.</p>
+        <p><strong>Retorno</strong> = quanto você espera ganhar além do que aplicou.</p>
+        <div class="boxed" style="margin-top:.9em">
+          <h4>A lei da gravidade</h4>
+          <p style="font-weight:700">Quanto maior o risco, maior o retorno possível. E o contrário é obrigatório: <span class="hl">retorno alto sem risco não existe.</span></p>
+        </div>
+      </div>
+      <div>
+        <div class="calc">
+          <div class="r"><b>Aplicação segura — 1% a.m.</b></div>
+          <div class="r"><span>R$ 1.000 →</span><b class="win">R$ 1.010,00 · com certeza</b></div>
+        </div>
+        <div class="calc" style="margin-top:.8em">
+          <div class="r"><b>Aplicação arriscada — 10% a.m.</b></div>
+          <div class="r"><span>se der certo →</span><b class="win">R$ 1.100,00</b></div>
+          <div class="r"><span>se der errado →</span><b class="lose">R$ 900,00</b></div>
+        </div>
+        <p style="margin-top:.9em;font-size:.88em;color:var(--muted)">O retorno maior não é um presente. É o preço que o mercado paga para você aceitar a chance de perder.</p>
+      </div>
+    </div>
+  </div>
+  <aside class="notes"><p>Pergunte antes de revelar o segundo bloco: "quanto vocês acham que rende uma aplicação de 10% ao mês?" Alguém sempre responde "R$ 1.100". Ninguém responde "R$ 900".</p></aside>
+</section>
+
+<section class="slide" data-grp="Módulo 2" data-t="Aversão à perda e a regra de se informar">
+  <div class="top"><span class="mod">Módulo <b>02</b> · A armadilha</span><span class="chip chip--resumo">Resumo</span></div>
+  <div class="body">
+    <div class="cols">
+      <div class="warn">
+        <h4>Aversão à perda</h4>
+        <p>A pessoa erra o investimento, vê o prejuízo e <strong>paralisa</strong>. Não resgata, porque resgatar é admitir que perdeu. Fica esperando voltar.</p>
+        <p style="font-weight:700">Resultado: em vez de limitar a perda, ela aumenta. Não realizar o prejuízo não faz o prejuízo sumir — só faz ele crescer.</p>
+      </div>
+      <div>
+        <blockquote class="pull" style="font-size:1.15em">"Antes de investir, é preciso primeiro <span class="mark">se informar bastante</span>."</blockquote>
+        <p class="src" style="margin-top:.9em">Trecho grifado no livro, p. 127</p>
+        <p style="margin-top:1em">Fale com o gerente — <strong>mas não só com ele</strong>. Jornais, colunas, sites, pessoas experientes. E lembre: o mercado é dinâmico. O que é verdade hoje <strong>pode não ser daqui a seis meses</strong>.</p>
+      </div>
+    </div>
+  </div>
+  <aside class="notes"><p>Traga o caso da Paula, do livro: ela foi mal assessorada pelo gerente. Ele não é vilão — tem meta de produto. Ela tem meta de vida. Nem sempre coincidem.</p></aside>
+</section>
+
+<section class="slide" data-grp="Módulo 2" data-t="Dia a dia — módulo 2">
+  <div class="top"><span class="mod">Módulo <b>02</b></span><span class="chip chip--dia">Dia a dia</span></div>
+  <div class="body">
+    <ul>
+      <li><strong>O amigo do grupo que "dobra dinheiro".</strong> Se ele dobra em 30 dias e não tem risco, por que ele precisa do seu dinheiro?</li>
+      <li><strong>O gerente com meta.</strong> Não é vilão — tem meta de produto. Você tem meta de vida. Nem sempre coincidem.</li>
+      <li><strong>A aversão à perda fora das finanças.</strong> O filme ruim que você assiste até o fim "porque já paguei o ingresso". A academia que você não cancela. É o mesmo viés.</li>
+      <li><strong>A ação que "vai voltar".</strong> Todo mundo conhece alguém segurando um papel há seis anos. Essa pessoa não está investindo — está evitando sentir.</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>O exemplo do ingresso de cinema costuma render risadas — use como ponte para mostrar que o viés é humano, não burrice financeira.</p></aside>
+</section>
+
+<section class="slide" data-grp="Módulo 2" data-t="Pesquisa — o custo dos golpes">
+  <div class="top"><span class="mod">Módulo <b>02</b> · O custo de não se informar</span><span class="chip chip--dados">Pesquisa</span></div>
+  <div class="body">
+    <div class="stats">
+      <div class="stat"><span class="n">R$ 51<small> bi</small></span><span class="l">em golpes financeiros no Brasil em 12 meses</span></div>
+      <div class="stat"><span class="n">R$ 2.540</span><span class="l">de prejuízo médio por vítima (+21%)</span></div>
+      <div class="stat"><span class="n">~50<small>%</small></span><span class="l">cairiam em golpe de investimento, em simulação da CVM com a ANBIMA</span></div>
+      <div class="stat"><span class="n">R$ 4,1<small> bi</small></span><span class="l">o rombo estimado da pirâmide Braiscompany</span></div>
+    </div>
+    <p class="src">CVM/ANBIMA · levantamentos de mercado, 2025</p>
+  </div>
+  <aside class="notes">
+    <p class="say">"Metade das pessoas cairia. Todo mundo aqui acha que é da outra metade. Essa certeza é o golpe."</p>
+  </aside>
+</section>
+
+<section class="slide" data-grp="Módulo 2" data-t="Recurso — Portal do Investidor (CVM)">
+  <div class="top"><span class="mod">Módulo <b>02</b></span><span class="chip chip--recurso">Recurso gratuito</span></div>
+  <div class="body">
+    <div class="res">
+      <div>
+        <div class="name">Portal do Investidor — CVM</div>
+        <div class="url">investidor.gov.br · gov.br/cvm</div>
+      </div>
+      <p>Gratuito e oficial. Serve para três coisas na hora H:</p>
+      <ol class="steps" style="font-size:.92em">
+        <li>Consultar se a corretora ou instituição é <strong>autorizada</strong> — leva 30 segundos e elimina o golpe da "corretora fantasma"</li>
+        <li>Ver a lista de <strong>alertas contra ofertas irregulares</strong></li>
+        <li>Acessar os <strong>cursos livres a distância gratuitos</strong> da própria CVM</li>
+      </ol>
+      <p class="todo">Atividade: cada aluno consulta o nome de uma "oportunidade" que já apareceu no celular dele.</p>
+    </div>
+  </div>
+  <aside class="notes"><p>Esse é o recurso que mais volta como feedback depois da aula. Insista para fazerem a consulta ali, na hora.</p></aside>
+</section>
+
+<!-- ══════════════════════════════ MÓDULO 3 ══════════════════════════════ -->
+<section class="slide slide--band" data-grp="Módulo 3" data-t="Abertura do módulo 3">
+  <div class="top"><span class="mod">Módulo</span><span class="pg">pp. 129–131</span></div>
+  <div class="m">
+    <div class="num">03</div>
+    <h2>Perfil do investidor, prazo e a proteção da CVM</h2>
+  </div>
+  <div class="agenda"><span>Resumo</span><span>Dia a dia</span><span>Pesquisa</span><span>Recurso</span></div>
+</section>
+
+<section class="slide" data-grp="Módulo 3" data-t="Posso × aceito + teste de estômago">
+  <div class="top"><span class="mod">Módulo <b>03</b> · Perfil do investidor</span><span class="chip chip--resumo">Resumo</span></div>
+  <div class="body">
+    <div class="cols">
+      <div>
+        <p>O perfil tem <strong>duas dimensões</strong> — e quase todo mundo só pensa numa:</p>
+        <div class="tw" style="margin-top:.7em">
+          <table>
+            <tr><th>Dimensão</th><th>Pergunta</th></tr>
+            <tr><td><b>Racional</b></td><td>Quanto risco eu <strong>POSSO</strong> correr?<br><span style="color:var(--muted);font-size:.9em">prazo, objetivo, patrimônio</span></td></tr>
+            <tr><td><b>Psicológica</b></td><td>Quanto risco eu <strong>ACEITO</strong> correr?<br><span style="color:var(--muted);font-size:.9em">sono, estômago</span></td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="boxed">
+        <h4>O teste de estômago · p. 131</h4>
+        <p>Você tem <strong>R$ 3.000</strong>. A aplicação pode render <strong>+7%</strong> ou perder <strong>−7%</strong> no mês.</p>
+        <div class="calc" style="margin-top:.6em">
+          <div class="r"><span>deu certo →</span><b class="win">R$ 3.210,00</b></div>
+          <div class="r"><span>deu errado →</span><b class="lose">R$ 2.790,00</b></div>
+        </div>
+        <p style="margin-top:.7em;font-weight:700">Como você reagiria a perder esses R$ 210? A resposta honesta <em>é</em> o seu perfil.</p>
+      </div>
+    </div>
+  </div>
+  <aside class="notes"><p>Dinâmica: peça mão levantada. "Quem dormiria tranquilo?" / "Quem sacaria tudo no dia seguinte?" A divisão da sala já demonstra que perfil é individual.</p></aside>
+</section>
+
+<section class="slide" data-grp="Módulo 3" data-t="Prazo e as 3 checagens da CVM">
+  <div class="top"><span class="mod">Módulo <b>03</b> · Prazo e suitability</span><span class="chip chip--resumo">Resumo</span></div>
+  <div class="body">
+    <div class="cols">
+      <div class="warn">
+        <h4>O fator mais ignorado: prazo</h4>
+        <p>No livro, a avó da Paula precisa do dinheiro em <strong>seis meses</strong> e recebe sugestão de investimento de alto risco.</p>
+        <p>Por que está errado? Porque <strong>não há tempo de recuperar</strong> uma eventual perda.</p>
+        <p style="font-weight:700">Prazo curto = risco baixo. Não é opinião, é aritmética.</p>
+      </div>
+      <div>
+        <h3>As 3 checagens obrigatórias</h3>
+        <p style="font-size:.9em;margin:.6em 0">A <strong>CVM</strong>, autarquia federal, obriga a instituição a verificar antes de te vender qualquer produto:</p>
+        <ol class="steps">
+          <li>O produto é adequado aos <strong>seus objetivos</strong>?</li>
+          <li>Sua <strong>situação financeira</strong> é compatível?</li>
+          <li>Você tem <strong>conhecimento</strong> para entender os riscos?</li>
+        </ol>
+        <p style="margin-top:.9em;font-weight:700" class="hl">O questionário chato não é burocracia — é o seu escudo.</p>
+      </div>
+    </div>
+  </div>
+  <aside class="notes"><p>Esse conjunto de checagens tem nome de mercado: <b>suitability</b>. Vale citar o termo, porque eles vão encontrá-lo no app do banco.</p></aside>
+</section>
+
+<section class="slide" data-grp="Módulo 3" data-t="Dia a dia — módulo 3">
+  <div class="top"><span class="mod">Módulo <b>03</b></span><span class="chip chip--dia">Dia a dia</span></div>
+  <div class="body">
+    <ul>
+      <li><strong>O dinheiro da entrada do apartamento (12 meses).</strong> Não vai para ação. Ponto.</li>
+      <li><strong>A reserva de emergência.</strong> Tem que estar em algo que resgata hoje — pneu fura na terça, não no vencimento do título.</li>
+      <li><strong>A aposentadoria aos 25 anos.</strong> Prazo de 40 anos aguenta oscilação. Aqui, ser conservador demais também é um risco: o de não chegar lá.</li>
+      <li><strong>Clicar em qualquer coisa no questionário.</strong> É como assinar termo de cirurgia sem ler — e depois reclamar do resultado.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide" data-grp="Módulo 3" data-t="Pesquisa — reserva de emergência">
+  <div class="top"><span class="mod">Módulo <b>03</b> · A reserva que não existe</span><span class="chip chip--dados">Pesquisa</span></div>
+  <div class="body">
+    <div class="stats">
+      <div class="stat"><span class="n">69<small>%</small></span><span class="l">dizem ter alguma reserva de emergência</span></div>
+      <div class="stat"><span class="n">43<small>%</small></span><span class="l">ficariam sem esses recursos em até 6 meses</span></div>
+      <div class="stat"><span class="n">1/3</span><span class="l">da população não tem <b>nada</b> guardado</span></div>
+    </div>
+    <p class="src">ANBIMA / Datafolha</p>
+  </div>
+  <aside class="notes">
+    <p class="say">"Antes de escolher entre CDB e ação, responda: se meu carro quebrar amanhã, de onde sai o dinheiro? Se a resposta for 'cartão', seu primeiro investimento é a reserva — e o segundo é quitar a dívida mais cara."</p>
+    <p>Amarre com o dado do módulo 1: 78,9% de endividamento. O país tem dívida cara e reserva curta ao mesmo tempo.</p>
+  </aside>
+</section>
+
+<section class="slide" data-grp="Módulo 3" data-t="Recurso — questionário de perfil">
+  <div class="top"><span class="mod">Módulo <b>03</b></span><span class="chip chip--recurso">Recurso gratuito</span></div>
+  <div class="body">
+    <div class="res">
+      <div>
+        <div class="name">Questionário de perfil de investidor</div>
+        <div class="url">bancos e corretoras · gratuito e aberto</div>
+      </div>
+      <p>O próprio livro dá a dica que quase ninguém sabe: <strong>é possível encontrar diversos desses testes na internet, disponíveis mesmo para quem não é cliente da instituição.</strong></p>
+      <p class="todo">Atividade: cada aluno faz dois questionários de instituições diferentes e compara. Quando o resultado dá diferente, a discussão fica ótima — mostra que perfil é ferramenta de reflexão, não sentença.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ MÓDULO 4 ══════════════════════════════ -->
+<section class="slide slide--band" data-grp="Módulo 4" data-t="Abertura do módulo 4">
+  <div class="top"><span class="mod">Módulo</span><span class="pg">pp. 131–133</span></div>
+  <div class="m">
+    <div class="num">04</div>
+    <h2>Renda fixa, renda variável e a poupança</h2>
+  </div>
+  <div class="agenda"><span>Resumo</span><span>Dia a dia</span><span>Pesquisa</span><span>Recurso</span></div>
+</section>
+
+<section class="slide" data-grp="Módulo 4" data-t="Os dois grandes baldes">
+  <div class="top"><span class="mod">Módulo <b>04</b> · Os dois baldes</span><span class="chip chip--resumo">Resumo</span></div>
+  <div class="body">
+    <div class="tw">
+      <table>
+        <tr><th></th><th>Renda fixa</th><th>Renda variável</th></tr>
+        <tr><td><b>Definição</b></td><td>Você sabe antecipadamente <strong>quanto</strong> vai receber — ou pelo menos <strong>a regra</strong> (o indexador)</td><td><strong>Impossível</strong> saber o retorno antes. Pode ser <strong>negativo</strong></td></tr>
+        <tr><td><b>Exemplos</b></td><td>Poupança, Tesouro Direto, CDB, fundos de renda fixa</td><td>Ações, fundos de investimento em ações</td></tr>
+        <tr><td><b>Serve para</b></td><td>Reserva e objetivos com data marcada</td><td>Prazo longo, para quem aceita oscilar</td></tr>
+      </table>
+    </div>
+    <p style="margin-top:1.2em" class="hl"><strong>"Renda fixa" não quer dizer "valor fixo":</strong> o que é fixa é a regra, não o resultado no meio do caminho.</p>
+  </div>
+</section>
+
+<section class="slide" data-grp="Módulo 4" data-t="Poupança: FGC, aniversário e a regra">
+  <div class="top"><span class="mod">Módulo <b>04</b> · A poupança por dentro</span><span class="chip chip--resumo">Resumo</span></div>
+  <div class="body">
+    <div class="cols">
+      <div>
+        <ul class="plain">
+          <li><strong>FGC</strong> — Fundo Garantidor de Créditos, entidade privada sem fins lucrativos, garante até <strong>R$ 250.000 por CPF, por instituição</strong>, se o banco quebrar</li>
+          <li><strong>Sem Imposto de Renda</strong> e <strong>sem taxa de administração</strong></li>
+          <li>Retorno baixo, risco mínimo</li>
+          <li>Exemplo do livro: R$ 100/mês por 2 anos a ~0,6% a.m. → <strong>R$ 2.573,12</strong>, sendo <strong>R$ 173,12</strong> de rendimento</li>
+        </ul>
+        <div class="boxed" style="margin-top:1em">
+          <h4>A regra legal do rendimento</h4>
+          <p style="font-size:.88em"><strong>TR + parcela adicional</strong>, sendo <strong>0,5% ao mês</strong> se a Selic estiver acima de 8,5% a.a.; ou <strong>70% da meta Selic</strong> se estiver igual ou abaixo disso.</p>
+        </div>
+      </div>
+      <div class="warn">
+        <h4>A pegadinha do aniversário</h4>
+        <p>Depositou em <strong>10 de janeiro</strong>? Rende sobre o menor saldo até <strong>9 de fevereiro</strong>.</p>
+        <p style="font-weight:700">Sacou antes do aniversário → perde os juros do mês inteiro.</p>
+        <p>Contas abertas nos dias <strong>29, 30 e 31</strong> têm aniversário no <strong>dia 1º</strong>.</p>
+        <p style="font-style:italic;color:var(--muted)">Dá para perder um mês de rendimento por sacar um dia antes. Coloque lembrete no celular.</p>
+      </div>
+    </div>
+  </div>
+  <aside class="notes"><p>TR = Taxa Referencial, calculada com base na taxa média mensal dos CDBs prefixados de 30 dias emitidos por 30 instituições selecionadas.</p></aside>
+</section>
+
+<section class="slide" data-grp="Módulo 4" data-t="Dia a dia — módulo 4">
+  <div class="top"><span class="mod">Módulo <b>04</b></span><span class="chip chip--dia">Dia a dia</span></div>
+  <div class="body">
+    <ul>
+      <li><strong>Sacar um dia antes do aniversário.</strong> R$ 5.000 na poupança, saque no dia 9 em vez do dia 10 = um mês inteiro de rendimento no lixo.</li>
+      <li><strong>Ter R$ 400 mil num banco só.</strong> O FGC cobre R$ 250 mil por CPF, por instituição. Dividir entre dois bancos é literalmente de graça e cobre tudo.</li>
+      <li><strong>O salário parado na conta corrente.</strong> Conta corrente rende zero. A poupança é ruim — mas ganha de zero.</li>
+      <li><strong>Vender um título antes do vencimento.</strong> Pode dar prejuízo mesmo sendo renda fixa. Fixa é a regra, não o caminho.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide" data-grp="Módulo 4" data-t="Pesquisa — a poupança em 2025">
+  <div class="top"><span class="mod">Módulo <b>04</b> · A poupança em 2025</span><span class="chip chip--dados">Pesquisa</span></div>
+  <div class="body">
+    <div class="cols">
+      <div class="stats" style="grid-template-columns:1fr 1fr">
+        <div class="stat"><span class="n">22<small>%</small></span><span class="l">dos brasileiros têm poupança — segue líder absoluta</span></div>
+        <div class="stat"><span class="n">R$ 85,6<small> bi</small></span><span class="l">de saques líquidos em 2025 — 5º ano seguido de saída</span></div>
+      </div>
+      <div class="tw">
+        <table>
+          <tr><th>2025</th><th class="num">Ganho real</th></tr>
+          <tr><td>Poupança <span style="color:var(--muted)">(8,19% − 4,26% de inflação)</span></td><td class="num">3,77%</td></tr>
+          <tr class="hi"><td>CDI</td><td class="num">9,65%</td></tr>
+        </table>
+        <p style="margin-top:.9em;font-size:.9em">Foi o <strong>maior ganho real da poupança em 19 anos</strong> — e ainda assim o CDI entregou <strong>mais de 2,5×</strong> isso, com risco parecido.</p>
+      </div>
+    </div>
+    <p class="src">ANBIMA/Datafolha · B3 Bora Investir · Banco Central</p>
+  </div>
+  <aside class="notes">
+    <p class="say">"A poupança não é vilã — ela é o degrau um. O problema é morar no degrau um com a escada inteira disponível ao lado."</p>
+    <p>Com a Selic em 14% (módulo 5), estamos na faixa "acima de 8,5%": a poupança fica travada em TR + 0,5% a.m. enquanto o resto da renda fixa acompanha a Selic cheia.</p>
+  </aside>
+</section>
+
+<section class="slide" data-grp="Módulo 4" data-t="Recurso — Meu Bolso em Dia">
+  <div class="top"><span class="mod">Módulo <b>04</b></span><span class="chip chip--recurso">Recurso gratuito</span></div>
+  <div class="body">
+    <div class="res">
+      <div>
+        <div class="name">Meu Bolso em Dia — Febraban</div>
+        <div class="url">meubolsoemdia.com.br</div>
+      </div>
+      <p>Plataforma gratuita, sem custo e sem venda de produto, com cursos, teste de saúde financeira e ferramentas de orçamento. É o melhor "primeiro link" para quem está começando do zero.</p>
+      <p class="todo">Combine com a Calculadora do Cidadão (módulo 1) para comparar poupança contra outras taxas.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ MÓDULO 5 ══════════════════════════════ -->
+<section class="slide slide--band" data-grp="Módulo 5" data-t="Abertura do módulo 5">
+  <div class="top"><span class="mod">Módulo</span><span class="pg">pp. 134–135</span></div>
+  <div class="m">
+    <div class="num">05</div>
+    <h2>Taxa Selic e fundos de investimento</h2>
+  </div>
+  <div class="agenda"><span>Resumo</span><span>Dia a dia</span><span>Pesquisa</span><span>Recurso</span></div>
+</section>
+
+<section class="slide" data-grp="Módulo 5" data-t="Selic — a mãe de todas as taxas">
+  <div class="top"><span class="mod">Módulo <b>05</b> · Taxa Selic</span><span class="chip chip--resumo">Resumo</span></div>
+  <div class="body">
+    <div class="cols">
+      <div>
+        <h2 style="font-size:1.45em">A mãe de todas as taxas</h2>
+        <ul class="plain" style="margin-top:.9em">
+          <li>É a <strong>taxa básica da economia</strong>, ligada à negociação dos títulos públicos do Tesouro Nacional</li>
+          <li>Como o governo é o devedor de <strong>menor risco</strong> do país, é a <strong>menor taxa de juros do Brasil</strong></li>
+          <li>É a média ponderada de todos os títulos públicos negociados no dia</li>
+        </ul>
+      </div>
+      <div>
+        <ul class="plain">
+          <li>A <strong>meta</strong> é definida pelo <strong>Copom</strong>; o Banco Central intervém se o mercado se afastar dela</li>
+          <li>Orienta <strong>todas</strong> as outras taxas do país — inclusive a remuneração da poupança</li>
+        </ul>
+        <div class="boxed" style="margin-top:1em">
+          <h4>Por que você deveria se importar</h4>
+          <p style="font-weight:700">Quando você ouve "o Copom mexeu nos juros", estão falando do seu bolso <span class="hl">nas duas pontas</span>: o que você recebe e o que você paga.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-grp="Módulo 5" data-t="Fundos de investimento">
+  <div class="top"><span class="mod">Módulo <b>05</b> · Fundos</span><span class="chip chip--resumo">Resumo</span></div>
+  <div class="body">
+    <p>Fundos são <strong>condomínios</strong>: várias pessoas juntam recursos e compram ativos em conjunto. Quem entra compra uma <strong>cota</strong> e vira <strong>cotista</strong>.</p>
+    <div class="cols-3" style="margin-top:1em">
+      <div class="card">
+        <h4>Vantagem 1 — poder de fogo</h4>
+        <p>Sozinho com R$ 1.000 você não consegue as taxas de quem investe R$ 50.000.</p>
+        <p style="font-weight:700">100 pessoas × R$ 1.000 = R$ 100.000 → o fundo negocia juros melhores.</p>
+      </div>
+      <div class="card">
+        <h4>Vantagem 2 — gestão profissional</h4>
+        <p>Um especialista monta a carteira conforme o perfil do fundo: <strong>conservador</strong>, <strong>moderado</strong> ou <strong>agressivo</strong>.</p>
+      </div>
+      <div class="card" style="border-color:var(--flame)">
+        <h4 style="color:var(--flame-ink)">O contraponto honesto</h4>
+        <p>Fundos são <strong>tributados</strong> e cobram <strong>taxa de administração, descontada dos rendimentos</strong>.</p>
+        <p style="font-weight:700">Leia o regulamento e compare taxas — o custo pode comer o ganho.</p>
+      </div>
+    </div>
+  </div>
+  <aside class="notes"><p>Analogia útil: fundo é como dividir o Uber. Sai mais barato pra todo mundo, mas tem taxa da plataforma. É exatamente o trade-off.</p></aside>
+</section>
+
+<section class="slide" data-grp="Módulo 5" data-t="Dia a dia — módulo 5">
+  <div class="top"><span class="mod">Módulo <b>05</b></span><span class="chip chip--dia">Dia a dia</span></div>
+  <div class="body">
+    <ul>
+      <li><strong>A Selic nos dois lados do balcão.</strong> Quando o Copom sobe o juro, seu CDB melhora <em>e</em> o rotativo do cartão piora. Quem só olha um lado toma prejuízo no outro.</li>
+      <li><strong>A taxa de administração invisível.</strong> 2% ao ano parece nada. Num fundo que rende 10%, é um quinto do seu ganho todo ano — e você nem vê a cobrança, porque ela já sai do rendimento.</li>
+      <li><strong>O consórcio e o financiamento.</strong> Ambos precificam a Selic. Quem entende a taxa básica negocia melhor até fora da corretora.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide" data-grp="Módulo 5" data-t="Pesquisa — Selic hoje">
+  <div class="top"><span class="mod">Módulo <b>05</b> · O momento atual</span><span class="chip chip--dados">Pesquisa</span></div>
+  <div class="body">
+    <div class="stats">
+      <div class="stat"><span class="n">14,00<small>%</small></span><span class="l">Selic ao ano, após corte de 0,25 p.p. em 05/08/2026</span></div>
+      <div class="stat"><span class="n">16/09</span><span class="l">próxima reunião do Copom</span></div>
+      <div class="stat"><span class="n">23<small> mi</small></span><span class="l">de brasileiros pretendem começar a investir em 2026</span></div>
+    </div>
+    <p style="margin-top:1.4em">Com a Selic em dois dígitos, a renda fixa está pagando muito — e a diferença entre <strong>"deixar na poupança"</strong> e <strong>"escolher direito"</strong> nunca foi tão cara.</p>
+    <p class="src">Copom / Banco Central · ANBIMA-Datafolha</p>
+  </div>
+  <aside class="notes">
+    <p class="say">"Todo brasileiro reclama de juro alto. Poucos percebem que juro alto tem dois lados do balcão — e que dá pra escolher de que lado sentar."</p>
+    <p>Confira a Selic vigente antes de cada aula: esse número muda a cada 45 dias.</p>
+  </aside>
+</section>
+
+<section class="slide" data-grp="Módulo 5" data-t="Recurso — Como Investir (ANBIMA)">
+  <div class="top"><span class="mod">Módulo <b>05</b></span><span class="chip chip--recurso">Recurso gratuito</span></div>
+  <div class="body">
+    <div class="res">
+      <div>
+        <div class="name">Como Investir — ANBIMA</div>
+        <div class="url">comoinvestir.anbima.com.br</div>
+      </div>
+      <p>Portal gratuito e sem venda de produto, com conteúdo sobre fundos, tipos de aplicação e comparações. Complementa o que o próprio livro recomenda: <strong>o Portal do Investidor da CVM como ferramenta de pesquisa de fundos.</strong></p>
+      <p class="todo">Atividade: comparar dois fundos de renda fixa parecidos e achar a diferença de taxa. Quem acha 1 ponto de diferença entendeu o módulo inteiro.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ MÓDULO 6 ══════════════════════════════ -->
+<section class="slide slide--band" data-grp="Módulo 6" data-t="Abertura do módulo 6">
+  <div class="top"><span class="mod">Módulo</span><span class="pg">pp. 136–137</span></div>
+  <div class="m">
+    <div class="num">06</div>
+    <h2>Indo mais fundo: Tesouro Direto, ações e bolsa</h2>
+  </div>
+  <div class="agenda"><span>Resumo</span><span>Dia a dia</span><span>Pesquisa</span><span>Recurso</span></div>
+  <aside class="notes"><p>Aviso do próprio livro: aqui exige experiência, conhecimento técnico e boa assessoria. Diga isso em voz alta — protege a turma e protege você.</p></aside>
+</section>
+
+<section class="slide" data-grp="Módulo 6" data-t="Tesouro Direto">
+  <div class="top"><span class="mod">Módulo <b>06</b> · Tesouro Direto</span><span class="chip chip--resumo">Resumo</span></div>
+  <div class="body">
+    <div class="cols">
+      <div>
+        <ul class="plain">
+          <li>Programa de venda de <strong>títulos públicos a pessoas físicas</strong>, do Tesouro Nacional em parceria com a bolsa</li>
+          <li>Entrada baixíssima — o livro cita <strong>a partir de R$ 30</strong> <span style="color:var(--muted)">(valor de jan/2014; confira o mínimo vigente no site)</span></li>
+          <li>Você escolhe o <strong>indexador</strong> e o prazo: curto, médio ou longo</li>
+        </ul>
+      </div>
+      <div>
+        <ul class="plain">
+          <li>Dá para <strong>vender antes do vencimento</strong> — a recompra é pelo <strong>valor de mercado</strong>, sem garantia de ganho</li>
+          <li>Taxas de administração e custódia <strong>baixas</strong>, com relatórios de movimentação</li>
+          <li><strong>IR</strong> cobrado na venda, no cupom de juros ou no vencimento</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-grp="Módulo 6" data-t="Ações e bolsa de valores">
+  <div class="top"><span class="mod">Módulo <b>06</b> · Ações e bolsa</span><span class="chip chip--resumo">Resumo</span></div>
+  <div class="body">
+    <div class="cols">
+      <div>
+        <p>Comprar ação = <strong>adquirir uma fatia da empresa</strong>. Você não empresta — <strong>você vira sócio</strong>.</p>
+        <div class="boxed" style="margin-top:.8em">
+          <h4>A função econômica</h4>
+          <p style="font-size:.9em">O mercado de ações <strong>transfere recursos de poupadores para empresas</strong> que precisam viabilizar negócios — construir fábrica, comprar outra empresa — <strong>em vez de recorrer ao crédito bancário</strong>.</p>
+        </div>
+        <p style="margin-top:.8em;font-size:.9em"><strong>Bolsa de valores:</strong> ambiente organizado que concentra as ofertas de compra e venda via corretoras autorizadas e divulga as cotações. Quem controla, normatiza e fiscaliza é a <strong>CVM</strong>.</p>
+      </div>
+      <div>
+        <blockquote class="pull" style="font-size:1.12em">"O investidor só perde no bolso na hora em que ele <span class="mark">decide vender</span> as ações pelo preço mais alto ou mais baixo."</blockquote>
+        <p class="src" style="margin-top:.8em">p. 137</p>
+        <p style="margin-top:.9em;font-weight:700">Enquanto não vende, é oscilação. Quando vende, vira resultado.</p>
+      </div>
+    </div>
+  </div>
+  <aside class="notes"><p>O preço reflete a situação da empresa: lucro trimestral acima do esperado valoriza, dificuldades derrubam. Os índices são termômetro da conjuntura — não do plano de ninguém.</p></aside>
+</section>
+
+<section class="slide" data-grp="Módulo 6" data-t="Dia a dia — módulo 6">
+  <div class="top"><span class="mod">Módulo <b>06</b></span><span class="chip chip--dia">Dia a dia</span></div>
+  <div class="body">
+    <ul>
+      <li><strong>Ser sócio de verdade.</strong> Quem tem ação do banco onde tem conta recebe dividendo daquela tarifa de que reclamou. Muda a relação com a marca.</li>
+      <li><strong>Abrir o app e ver −8%.</strong> Não perdeu nada ainda. Só perde quem clica em vender. É a aversão à perda do módulo 2 voltando ao jogo.</li>
+      <li><strong>O Tesouro para objetivo com data.</strong> Casamento em 2029 → título que vence em 2029. Casou o prazo, matou o risco.</li>
+      <li><strong>O "mercado caiu" do jornal.</strong> Quem tem objetivo de 20 anos não muda de vida por causa de uma manchete de terça.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide" data-grp="Módulo 6" data-t="Pesquisa — Tesouro e bolsa hoje">
+  <div class="top"><span class="mod">Módulo <b>06</b> · Onde o país já está</span><span class="chip chip--dados">Pesquisa</span></div>
+  <div class="body">
+    <div class="cols">
+      <div>
+        <h3>Tesouro Direto · jun/2026</h3>
+        <div class="stats" style="grid-template-columns:1fr 1fr;margin-top:.7em">
+          <div class="stat"><span class="n">35,6<small> mi</small></span><span class="l">cadastrados</span></div>
+          <div class="stat"><span class="n">3,59<small> mi</small></span><span class="l">ativos, com saldo</span></div>
+        </div>
+        <p style="margin-top:.9em;font-size:.88em">Estoque de <strong>R$ 262,5 bi</strong> (+45,5% em 12 meses) — 50,4% atrelado à inflação, 37,0% à Selic, 12,6% prefixado.</p>
+      </div>
+      <div>
+        <h3>Bolsa · B3</h3>
+        <div class="stats" style="grid-template-columns:1fr 1fr;margin-top:.7em">
+          <div class="stat"><span class="n">5,5<small> mi</small></span><span class="l">investidores em renda variável</span></div>
+          <div class="stat"><span class="n">R$ 635<small> bi</small></span><span class="l">em custódia (+20%)</span></div>
+        </div>
+        <p style="margin-top:.9em;font-size:.88em"><strong>+205.949</strong> novos investidores em 2025 (+4%). O maior crescimento veio de <strong>fora dos grandes centros</strong>: Piauí +7,73%, Amazonas +7,30%, Pará +7,02%.</p>
+      </div>
+    </div>
+    <p class="src">Tesouro Nacional · B3</p>
+  </div>
+  <aside class="notes">
+    <p class="say">"35,6 milhões cadastrados no Tesouro, mas só 3,6 milhões com dinheiro lá dentro. Dez pessoas se cadastram, uma investe. A distância entre saber e fazer é o assunto desta aula."</p>
+  </aside>
+</section>
+
+<section class="slide" data-grp="Módulo 6" data-t="Recurso — B3 Educação">
+  <div class="top"><span class="mod">Módulo <b>06</b></span><span class="chip chip--recurso">Recurso gratuito</span></div>
+  <div class="body">
+    <div class="res">
+      <div>
+        <div class="name">B3 Educação — cursos gratuitos com certificado</div>
+        <div class="url">edu.b3.com.br</div>
+      </div>
+      <p>Cursos gratuitos e online para diferentes níveis, <strong>com certificado assinado pela B3</strong> ao final. Tem trilha específica de Tesouro Direto — tipos de títulos, como investir — e de renda fixa.</p>
+      <p class="todo">Bônus: portal <strong>Bora Investir</strong> (borainvestir.b3.com.br), conteúdo gratuito sem venda de produto · <strong>simulador do Tesouro Direto</strong> em tesourodireto.com.br</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ FECHAMENTO ══════════════ -->
+<section class="slide" data-grp="Fechamento" data-t="Checklist das 6 perguntas">
+  <div class="top"><span class="mod">Fechamento · <b>o que levar pra casa</b></span><span class="pg">Checklist</span></div>
+  <div class="body">
+    <h2 style="font-size:1.5em">Seis perguntas antes de qualquer aplicação</h2>
+    <div class="cols" style="margin-top:1em">
+      <ol class="steps">
+        <li>Pra <strong>quê</strong> é esse dinheiro? <span style="color:var(--muted)">objetivo</span></li>
+        <li><strong>Quando</strong> vou precisar dele? <span style="color:var(--muted)">prazo</span></li>
+        <li>Quanto eu <strong>posso</strong> perder? <span style="color:var(--muted)">capacidade</span></li>
+      </ol>
+      <ol class="steps" start="4" style="counter-reset:s 3">
+        <li>Quanto eu <strong>aceito</strong> perder? <span style="color:var(--muted)">tolerância</span></li>
+        <li>Quais os <strong>custos</strong>? <span style="color:var(--muted)">taxa + IR: olhe o líquido</span></li>
+        <li>Eu <strong>entendo</strong> como isso rende? <span style="color:var(--muted)">se não, não compre</span></li>
+      </ol>
+    </div>
+  </div>
+  <aside class="notes"><p>Peça pra fotografarem este slide. É o único que eles vão consultar depois.</p></aside>
+</section>
+
+<section class="slide" data-grp="Fechamento" data-t="Os 5 erros">
+  <div class="top"><span class="mod">Fechamento · <b>o que o capítulo inteiro ataca</b></span><span class="pg">Erros</span></div>
+  <div class="body">
+    <div class="cols-3">
+      <div class="card"><h4>Erro 1</h4><p><strong>Investir sem saber o prazo</strong> — dinheiro de seis meses em ativo de risco</p></div>
+      <div class="card"><h4>Erro 2</h4><p><strong>Aceitar recomendação sem entender</strong> — o caso Paula: "mal assessorada"</p></div>
+      <div class="card"><h4>Erro 3</h4><p><strong>Ignorar o próprio perfil</strong> — escolher pelo retorno, não pela sua capacidade de aguentar</p></div>
+      <div class="card"><h4>Erro 4</h4><p><strong>Aversão à perda</strong> — travar no prejuízo em vez de agir</p></div>
+      <div class="card"><h4>Erro 5</h4><p><strong>Não olhar os custos</strong> — taxa de administração e IR comem rendimento em silêncio</p></div>
+      <div class="card" style="border-style:dashed;border-color:var(--flame)"><h4 style="color:var(--flame-ink)">O antídoto</h4><p>As seis perguntas do slide anterior. Nenhum erro sobrevive a elas.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide slide--final" data-grp="Fechamento" data-t="Frase final">
+  <div class="body" style="align-self:center">
+    <blockquote class="pull">"Não importa se o valor é pequeno; o importante é que se comece e se mantenha a determinação de economizar e investir."</blockquote>
+    <p class="src">Encerramento do capítulo · p. 137</p>
+  </div>
+  <aside class="notes"><p>Leia em voz alta, devagar. Não comente depois. Termine aqui.</p></aside>
+</section>
+
+<section class="slide" data-grp="Fechamento" data-t="Fontes e validade dos dados">
+  <div class="top"><span class="mod">Fontes · <b>dados conferidos em 06/08/2026</b></span><span class="pg">Referências</span></div>
+  <div class="body">
+    <div class="cols">
+      <div>
+        <h3>Pesquisas citadas</h3>
+        <ul class="plain" style="margin-top:.7em;font-size:.88em">
+          <li>ANBIMA / Datafolha — Raio X do Investidor Brasileiro, 9ª edição</li>
+          <li>CNC — Peic, Pesquisa de Endividamento e Inadimplência do Consumidor</li>
+          <li>Banco Central / Copom — meta Selic</li>
+          <li>Tesouro Nacional — Balanço do Tesouro Direto, junho/2026</li>
+          <li>B3 — perfil de pessoas físicas e evolução da base de investidores</li>
+          <li>CVM e ANBIMA — simulação educativa sobre golpes de investimento</li>
+        </ul>
+      </div>
+      <div class="warn">
+        <h4>Validade dos números</h4>
+        <p><strong>Selic e Peic</strong> mudam rápido — confira antes de cada aula.</p>
+        <p><strong>ANBIMA</strong> é anual, <strong>B3 e Tesouro</strong> são mensais: têm vida útil maior.</p>
+        <p style="color:var(--muted);font-style:italic">O conteúdo conceitual vem do capítulo de investimentos do livro, pp. 126–137. Os dados são complementares e externos a ele.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /stage -->
+
+<button class="nav nav--prev" id="prev" aria-label="Slide anterior"></button>
+<button class="nav nav--next" id="next" aria-label="Próximo slide"></button>
+
+<div class="rail"><i id="railFill"></i></div>
+
+<div class="hud">
+  <span class="timer" id="timer">00:00</span>
+  <button id="btnNotes" title="Notas do apresentador (N)">Notas</button>
+  <button id="btnOv" title="Todos os slides (O)">Slides</button>
+  <button id="btnTheme" title="Alternar tema">Tema</button>
+  <button id="btnHelp" title="Atalhos (?)">?</button>
+  <span class="count"><b id="cur">1</b>/<span id="tot">1</span></span>
+</div>
+
+<div class="npanel" id="npanel">
+  <h5>Notas do apresentador</h5>
+  <div class="inner" id="ninner"></div>
+</div>
+
+<div class="ov" id="ov">
+  <h5>Todos os slides</h5>
+  <div id="ovBody"></div>
+</div>
+
+<div class="help" id="help">
+  <div class="box">
+    <h5>Atalhos</h5>
+    <dl>
+      <dt>→ ␣ PgDn</dt><dd>Próximo slide</dd>
+      <dt>← PgUp</dt><dd>Slide anterior</dd>
+      <dt>Home / End</dt><dd>Primeiro / último slide</dd>
+      <dt>O</dt><dd>Lista de todos os slides</dd>
+      <dt>N</dt><dd>Notas do apresentador</dd>
+      <dt>T</dt><dd>Cronômetro da aula</dd>
+      <dt>F</dt><dd>Tela cheia</dd>
+      <dt>Ctrl/⌘ P</dt><dd>Imprimir como apostila, um slide por página</dd>
+      <dt>Esc</dt><dd>Fechar painéis</dd>
+    </dl>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var i = 0;
+  var elCur = document.getElementById('cur');
+  var elTot = document.getElementById('tot');
+  var railFill = document.getElementById('railFill');
+  var npanel = document.getElementById('npanel');
+  var ninner = document.getElementById('ninner');
+  var ov = document.getElementById('ov');
+  var ovBody = document.getElementById('ovBody');
+  var help = document.getElementById('help');
+  var timerEl = document.getElementById('timer');
+
+  elTot.textContent = slides.length;
+
+  function paintNotes(){
+    var n = slides[i].querySelector('.notes');
+    ninner.innerHTML = n ? n.innerHTML : '<p style="color:var(--muted)">Sem notas neste slide.</p>';
+  }
+  function markOv(){
+    var btns = ovBody.querySelectorAll('button');
+    for (var k=0;k<btns.length;k++) btns[k].classList.toggle('cur', k===i);
+  }
+  function show(n, push){
+    i = Math.max(0, Math.min(slides.length-1, n));
+    for (var k=0;k<slides.length;k++) slides[k].classList.toggle('is-live', k===i);
+    elCur.textContent = i+1;
+    railFill.style.width = ((i)/(slides.length-1)*100)+'%';
+    paintNotes(); markOv();
+    if (push !== false) history.replaceState(null,'','#'+(i+1));
+  }
+  function go(d){ show(i+d); }
+
+  /* ---- índice / visão geral ---- */
+  (function buildOverview(){
+    var lastGrp = null, ul = null, frag = document.createDocumentFragment();
+    slides.forEach(function(s, idx){
+      var grp = s.getAttribute('data-grp') || '';
+      if (grp !== lastGrp){
+        var wrap = document.createElement('div'); wrap.className = 'grp';
+        var lab = document.createElement('div'); lab.className = 'glab'; lab.textContent = grp;
+        ul = document.createElement('ul');
+        wrap.appendChild(lab); wrap.appendChild(ul); frag.appendChild(wrap);
+        lastGrp = grp;
+      }
+      var chip = s.querySelector('.chip');
+      var li = document.createElement('li');
+      var b = document.createElement('button');
+      b.type = 'button';
+      var num = document.createElement('i'); num.textContent = String(idx+1).padStart(2,'0');
+      var tt = document.createElement('span'); tt.textContent = s.getAttribute('data-t') || '';
+      b.appendChild(num); b.appendChild(tt);
+      if (chip){ var em = document.createElement('em'); em.textContent = chip.textContent; b.appendChild(em); }
+      b.addEventListener('click', function(){ show(idx); ov.classList.remove('on'); });
+      li.appendChild(b); ul.appendChild(li);
+    });
+    ovBody.appendChild(frag);
+  })();
+
+  /* ---- cronômetro ---- */
+  var t0 = null, tick = null;
+  function fmt(ms){
+    var s = Math.floor(ms/1000);
+    return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+  }
+  function toggleTimer(){
+    if (tick){ clearInterval(tick); tick = null; timerEl.classList.remove('on'); return; }
+    t0 = Date.now(); timerEl.classList.add('on'); timerEl.textContent = '00:00';
+    tick = setInterval(function(){ timerEl.textContent = fmt(Date.now()-t0); }, 1000);
+  }
+
+  /* ---- tema ---- */
+  document.getElementById('btnTheme').addEventListener('click', function(){
+    var root = document.documentElement;
+    var isDark = root.getAttribute('data-theme') === 'dark' ||
+      (!root.hasAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    root.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  });
+
+  document.getElementById('prev').addEventListener('click', function(){ go(-1); });
+  document.getElementById('next').addEventListener('click', function(){ go(1); });
+  document.getElementById('btnNotes').addEventListener('click', function(){ npanel.classList.toggle('on'); });
+  document.getElementById('btnOv').addEventListener('click', function(){ ov.classList.toggle('on'); });
+  document.getElementById('btnHelp').addEventListener('click', function(){ help.classList.toggle('on'); });
+  help.addEventListener('click', function(){ help.classList.remove('on'); });
+
+  document.addEventListener('keydown', function(e){
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var k = e.key;
+    if (k === 'ArrowRight' || k === 'PageDown' || k === ' ' || k === 'Spacebar'){ e.preventDefault(); go(1); }
+    else if (k === 'ArrowLeft' || k === 'PageUp'){ e.preventDefault(); go(-1); }
+    else if (k === 'Home'){ e.preventDefault(); show(0); }
+    else if (k === 'End'){ e.preventDefault(); show(slides.length-1); }
+    else if (k === 'o' || k === 'O'){ ov.classList.toggle('on'); }
+    else if (k === 'n' || k === 'N'){ npanel.classList.toggle('on'); }
+    else if (k === 't' || k === 'T'){ toggleTimer(); }
+    else if (k === 'f' || k === 'F'){
+      if (document.fullscreenElement) document.exitFullscreen();
+      else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+    }
+    else if (k === '?'){ help.classList.toggle('on'); }
+    else if (k === 'Escape'){ ov.classList.remove('on'); help.classList.remove('on'); npanel.classList.remove('on'); }
+  });
+
+  /* ---- toque ---- */
+  var x0 = null;
+  document.addEventListener('touchstart', function(e){ x0 = e.changedTouches[0].clientX; }, {passive:true});
+  document.addEventListener('touchend', function(e){
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 45) go(dx < 0 ? 1 : -1);
+    x0 = null;
+  }, {passive:true});
+
+  var start = parseInt((location.hash||'').replace('#',''), 10);
+  show(isFinite(start) && start > 0 ? start-1 : 0, false);
+})();
+</script>
+</body>
+</html>
