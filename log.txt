@@ -48,3 +48,4 @@
 2026-08-05: On Diophantine equations over the integer rings of quadratic fields
 2026-08-06: A fractional quantum Hall factory on quantum processors: constant-depth preparation of clustered non-Abelian states
 2026-08-07: Dimension-Free Polylogarithmic Quantum Shadow Tomography from Sequential Pretty-Good Measurements
+2026-08-08: Dimension-Free Polylogarithmic Quantum Shadow Tomography from Sequential Pretty-Good Measurements
