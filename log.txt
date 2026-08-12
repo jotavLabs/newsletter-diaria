@@ -52,3 +52,4 @@
 2026-08-09: Dimension-Free Polylogarithmic Quantum Shadow Tomography from Sequential Pretty-Good Measurements
 2026-08-10: Entanglement Mpemba Effect
 2026-08-11: Learning Clifford-structured quantum unitaries and Hamiltonians
+2026-08-12: Long-Horizon AI Research for Grothendieck Constant: A Case Study in Human-AI Mathematical Collaboration
