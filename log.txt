@@ -53,3 +53,4 @@
 2026-08-10: Entanglement Mpemba Effect
 2026-08-11: Learning Clifford-structured quantum unitaries and Hamiltonians
 2026-08-12: Long-Horizon AI Research for Grothendieck Constant: A Case Study in Human-AI Mathematical Collaboration
+2026-08-13: Near optimal three-fold additive energy bound for points on convex curves
