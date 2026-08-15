@@ -55,3 +55,4 @@
 2026-08-12: Long-Horizon AI Research for Grothendieck Constant: A Case Study in Human-AI Mathematical Collaboration
 2026-08-13: Near optimal three-fold additive energy bound for points on convex curves
 2026-08-14: Experimental Quantum Key Distribution in an Indefinite Causal Order
+2026-08-15: Every PPT channel has finite entanglement-breaking index
