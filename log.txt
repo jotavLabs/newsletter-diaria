@@ -57,3 +57,4 @@
 2026-08-14: Experimental Quantum Key Distribution in an Indefinite Causal Order
 2026-08-15: Every PPT channel has finite entanglement-breaking index
 2026-08-16: Every PPT channel has finite entanglement-breaking index
+2026-08-17: GPU implementation of mixed quantum-classical Liouville molecular dynamics without momentum jump
