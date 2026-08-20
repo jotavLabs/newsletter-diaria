@@ -59,3 +59,4 @@
 2026-08-16: Every PPT channel has finite entanglement-breaking index
 2026-08-17: GPU implementation of mixed quantum-classical Liouville molecular dynamics without momentum jump
 2026-08-18: Improving the matrix multiplication exponent with modern optimization and AlphaEvolve
+2026-08-20: Quantum Speedups Require Structure or Depth
