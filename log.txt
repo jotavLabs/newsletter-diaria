@@ -63,3 +63,4 @@
 2026-08-21: Imaging the vacuum fluctuations of a quantum field
 2026-08-22: Competing triangular and stripe supersolid orders in a dipolar quantum gas
 2026-08-23: Imaging the vacuum fluctuations of a quantum field
+2026-08-24: Almost sure upper bound for sums of random multiplicative functions and critical chaos
