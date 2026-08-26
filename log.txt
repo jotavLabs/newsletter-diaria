@@ -65,3 +65,4 @@
 2026-08-23: Imaging the vacuum fluctuations of a quantum field
 2026-08-24: Almost sure upper bound for sums of random multiplicative functions and critical chaos
 2026-08-25: Power-saving bounds for Thue--Mahler and Mordell equations
+2026-08-26: Oscillation of partial sums of the Möbius function and zeros of Riemann's zeta function
