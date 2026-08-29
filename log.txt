@@ -68,3 +68,4 @@
 2026-08-26: Oscillation of partial sums of the Möbius function and zeros of Riemann's zeta function
 2026-08-27: Exact analytical spectrum, eigenstates, and quantum geometry of the quarter-flux Harper-Hofstadter model
 2026-08-28: Mechanistic Reaction Prediction via Discrete Flow Matching on Graph-Structured Electron Occupation
+2026-08-29: Dynamics of local quantum information in random unitary circuits
