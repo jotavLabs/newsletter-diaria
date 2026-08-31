@@ -70,3 +70,4 @@
 2026-08-28: Mechanistic Reaction Prediction via Discrete Flow Matching on Graph-Structured Electron Occupation
 2026-08-29: Dynamics of local quantum information in random unitary circuits
 2026-08-30: Mechanistic Reaction Prediction via Discrete Flow Matching on Graph-Structured Electron Occupation
+2026-08-31: Exact quantification of nonlocal magic
