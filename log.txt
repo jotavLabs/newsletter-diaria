@@ -72,3 +72,4 @@
 2026-08-30: Mechanistic Reaction Prediction via Discrete Flow Matching on Graph-Structured Electron Occupation
 2026-08-31: Exact quantification of nonlocal magic
 2026-09-01: Bounded gaps between primes
+2026-09-02: Ten unknowns for Hilbert's tenth problem over the integers
