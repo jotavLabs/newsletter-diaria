@@ -73,3 +73,4 @@
 2026-08-31: Exact quantification of nonlocal magic
 2026-09-01: Bounded gaps between primes
 2026-09-02: Ten unknowns for Hilbert's tenth problem over the integers
+2026-09-03: A new proof that more than 2/3 of the zeros of the Riemann zeta function are simple and on the critical line
