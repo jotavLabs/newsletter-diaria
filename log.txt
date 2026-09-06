@@ -76,3 +76,4 @@
 2026-09-03: A new proof that more than 2/3 of the zeros of the Riemann zeta function are simple and on the critical line
 2026-09-04: Catalan's constant is irrational
 2026-09-05: Quantum communication and Bell nonlocality require infinite classical communication to simulate
+2026-09-06: Measurements on the separated subsystems of an entangled state
