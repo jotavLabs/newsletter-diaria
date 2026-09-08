@@ -78,3 +78,4 @@
 2026-09-05: Quantum communication and Bell nonlocality require infinite classical communication to simulate
 2026-09-06: Measurements on the separated subsystems of an entangled state
 2026-09-07: Counting sets with given doubling via dimension
+2026-09-08: Counting sets with given doubling via dimension
