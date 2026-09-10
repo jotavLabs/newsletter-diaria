@@ -80,3 +80,4 @@
 2026-09-07: Counting sets with given doubling via dimension
 2026-09-08: Counting sets with given doubling via dimension
 2026-09-09: Silver Rate Is (Almost) Optimal for Gradient Descent Acceleration
+2026-09-10: A positive resolution of the gap-entropy conjecture
