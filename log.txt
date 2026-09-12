@@ -82,3 +82,4 @@
 2026-09-09: Silver Rate Is (Almost) Optimal for Gradient Descent Acceleration
 2026-09-10: A positive resolution of the gap-entropy conjecture
 2026-09-11: The generalised semi-Clifford conjecture is false
+2026-09-12: Quantifying Symmetry Breaking
