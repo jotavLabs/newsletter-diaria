@@ -83,3 +83,4 @@
 2026-09-10: A positive resolution of the gap-entropy conjecture
 2026-09-11: The generalised semi-Clifford conjecture is false
 2026-09-12: Quantifying Symmetry Breaking
+2026-09-16: Query-optimal quantum simulation of Lindblad evolution
