@@ -85,3 +85,4 @@
 2026-09-12: Quantifying Symmetry Breaking
 2026-09-16: Query-optimal quantum simulation of Lindblad evolution
 2026-09-30: When Classical Correlations Certify Entanglement Recovery
+2026-10-01: All Unitaries Have Constant Depth Quantum Circuits
